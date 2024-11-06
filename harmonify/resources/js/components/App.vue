@@ -2,9 +2,7 @@
     <div
         class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden"
     >
-        <div
-            class="backdrop-blur-md bg-white/30 rounded-3xl w-[93%] h-[88vh] p-5 flex flex-col"
-        >
+        <div class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col">
             <div class="flex justify-between w-full">
                 <p class="text-3xl font-bold mb-3 ml-4 text-[#50858B]">
                     Harmonify
@@ -40,7 +38,7 @@
                 </div>
             </div>
             <div class="flex w-full h-full">
-                <div class="w-1/3 bg-white/30 mr-5 rounded-xl">
+                <div class="w-1/2 bg-white/30 mr-5 rounded-xl">
                     <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                         Calendar
                     </p>
@@ -76,24 +74,28 @@
                     </div>
                 </div>
 
-                <div class="w-1/3 bg-white/30 mr-5 rounded-xl">
-                    <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
-                        Posts
-                    </p>
+                <div class="w-1/4 rounded-xl flex flex-col">
+                    <div class="h-1/2 bg-white/30 mr-5 mb-3 rounded-xl">
+                        <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
+                            Posts
+                        </p>
+                    </div>
+                    <div class="h-1/2 bg-white/30 mr-5 rounded-xl">
+                        <button
+                            class="text-2xl font-bold m-3 ml-6 text-[#50858B]"
+                        >
+                            Sleep Graph
+                        </button>
+                    </div>
                 </div>
 
-                <div class="w-1/3 rounded-xl flex flex-col">
-                    <div class="h-1/3 bg-white/30 mb-5 rounded-xl">
+                <div class="w-1/4 rounded-xl flex flex-col">
+                    <div class="h-1/2 bg-white/30 mr-5 mb-3 rounded-xl">
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                             Goals
                         </p>
                     </div>
-                    <div class="h-1/3 bg-white/30 mb-5 rounded-xl">
-                        <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
-                            Chat
-                        </p>
-                    </div>
-                    <div class="h-1/3 bg-white/30 rounded-xl">
+                    <div class="h-1/2 bg-white/30 mr-5 rounded-xl">
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                             Advice
                         </p>
