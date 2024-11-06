@@ -14,3 +14,7 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/calendar', function () {
+    return view('calendar');
+});
+

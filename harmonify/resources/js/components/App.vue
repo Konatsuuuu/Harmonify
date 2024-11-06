@@ -37,6 +37,7 @@
                     <Logout />
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="flex w-full h-full">
                 <div class="w-1/2 bg-white/30 mr-5 rounded-xl">
                     <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
@@ -48,36 +49,93 @@
                                     Monday
                                     <div class="w-28 h-28 item-center justify-center mb-6">
                                         <button type="button" class="flex h-full w-full justify-center">
+=======
+            <div class="flex w-full h-[76vh]">
+                <div
+                    class="w-1/2 bg-white/30 mr-5 rounded-xl flex flex-col h-full"
+                >
+                    <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
+                        Calendar
+                    </p>
+                    <div
+                        class="flex flex-col h-full w-full rounded-lg overflow-hidden text-1xl text-[#50858B]"
+                    >
+                        <div class="flex flex-[0.7]">
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-2 ml-4 mb-4 rounded-xl"
+                            >
+                                Monday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+>>>>>>> 572e596 (calendar page)
                                         <img
                                             src="/public/svg/happy_bubble.svg"
                                             alt="Happy Bubble"
                                             class="bubble"
                                         />
                                     </button>
+<<<<<<< HEAD
                                     </div>
                                 </div>
                                 <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 mb-4 rounded-xl">
                                     Tuesday
                                     <div class="w-28 h-28 item-center justify-center mb-6">
                                         <button type="button" class="flex h-full w-full justify-center">
+=======
+                                </div>
+                            </div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 mb-4 rounded-xl"
+                            >
+                                Tuesday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+>>>>>>> 572e596 (calendar page)
                                         <img
                                             src="/public/svg/smiling_bubble.svg"
                                             alt="Smiling Bubble"
                                             class="bubble"
                                         />
                                     </button>
+<<<<<<< HEAD
                                     </div>
                                 </div>
                                 <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-4 ml-2 mb-4 rounded-xl">
                                     Wednesday
                                     <div class="w-28 h-28 item-center justify-center mb-6">
                                         <button type="button" class="flex h-full w-full justify-center">
+=======
+                                </div>
+                            </div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-4 ml-2 mb-4 rounded-xl"
+                            >
+                                Wednesday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+>>>>>>> 572e596 (calendar page)
                                         <img
                                             src="/public/svg/sad_bubble.svg"
                                             alt="Sad Bubble"
                                             class="bubble"
                                         />
                                     </button>
+<<<<<<< HEAD
                                     </div>
                                 </div>
                             </div>
@@ -145,14 +203,71 @@
                                 alt="Happy Bubble"
                                 class="bubble"
                             />
+=======
+                                </div>
+                            </div>
+>>>>>>> 572e596 (calendar page)
                         </div>
-                        <div class="w-28 h-28 ml-40">
-                            <img
-                                src="/public/svg/smiling_bubble.svg"
-                                alt="Smiling Bubble"
-                                class="bubble"
-                            />
+                        <div class="flex flex-[0.7]">
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-2 ml-4 mb-4 rounded-xl"
+                            >
+                                Thursday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+                                        <img
+                                            src="/public/svg/angry_bubble.svg"
+                                            alt="Angry Bubble"
+                                            class="bubble"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 mb-4 rounded-xl"
+                            >
+                                Friday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+                                        <img
+                                            src="/public/svg/sad_bubble.svg"
+                                            alt="Sad Bubble"
+                                            class="bubble"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-4 ml-2 mb-4 rounded-xl"
+                            >
+                                Saturday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+                                        <img
+                                            src="/public/svg/happy_bubble.svg"
+                                            alt="Happy Bubble"
+                                            class="bubble"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+<<<<<<< HEAD
                         <div class="w-28 h-28 ml-6">
                             <img
                                 src="/public/svg/sad_bubble.svg"
@@ -181,11 +296,59 @@
                         >
                             Sleep Graph
                         </button>
+=======
+                        <div class="flex flex-1">
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center mr-2 ml-4 mb-4"
+                            ></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 mb-24 rounded-xl"
+                            >
+                                Sunday
+                                <div
+                                    class="w-28 h-28 item-center justify-center mb-6"
+                                >
+                                    <button
+                                        type="button"
+                                        class="flex h-full w-full justify-center"
+                                    >
+                                        <img
+                                            src="/public/svg/happy_bubble.svg"
+                                            alt="Happy Bubble"
+                                            class="bubble"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex mr-2 flex-col">
+                                <div class="mt-32 justify-end">
+                                    <ExpandCalendar />
+                                </div>
+                            </div>
+                        </div>
+>>>>>>> 572e596 (calendar page)
                     </div>
                 </div>
 
                 <div class="w-1/4 rounded-xl flex flex-col">
+<<<<<<< HEAD
                     <div class="h-1/2 bg-white/30 mr-5 mb-3 rounded-xl">
+=======
+                    <div class="h-1/2 bg-white/30 mr-5 mb-5 rounded-xl">
+                        <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
+                            Posts
+                        </p>
+                    </div>
+                    <div class="h-1/2 bg-white/30 mr-5 rounded-xl">
+                        <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
+                            Sleep Graph
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-1/4 rounded-xl flex flex-col">
+                    <div class="h-1/2 bg-white/30 mr-5 mb-5 rounded-xl">
+>>>>>>> 572e596 (calendar page)
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                             Goals
                         </p>
@@ -202,11 +365,13 @@
 </template>
 
 <script>
+import ExpandCalendar from "./ExpandCalendar.vue";
 import Logout from "./Logout.vue";
 
 export default {
     components: {
         Logout,
+        ExpandCalendar,
     },
 };
 </script>
