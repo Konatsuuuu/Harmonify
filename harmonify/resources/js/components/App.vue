@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="flex flex-1">
-                                <div class="flex-1 flex items-start justify-center p-2 mr-2 ml-4 mb-4">
+                                <div class="flex-1 flex flex-col items-center justify-center mr-2 ml-4 mb-4">
                                 </div>
                                 <div :style="{marginBottom: '90px' }" class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 mb-4 rounded-xl">
                                     Sunday
@@ -134,7 +134,7 @@
                                     </button>
                                     </div>
                                 </div>
-                                <div class="flex-1 flex items-start justify-center p-2 mr-4 ml-2 mb-4">
+                                <div class="flex-1 flex flex-col items-center justify-center mr-4 ml-2 mb-4">
                                 </div>
                             </div>
                         </div>
