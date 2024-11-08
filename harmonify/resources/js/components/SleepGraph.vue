@@ -1,18 +1,29 @@
 <template>
-    <div class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden">
-        <div class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#b28666]">
+    <div
+        class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden"
+    >
+        <div
+            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#b28666]"
+        >
             <div class="flex items-center mb-1 ml-4 space-x-3 text-[#b28666]">
                 <BackButton />
                 <p class="text-3xl font-bold">Sleep Graph</p>
             </div>
             <div class="flex w-full h-full">
                 <div class="chart-container">
-                    <Bar ref="chart" :data="chartData" :options="chartOptions" class="w-30% h-full pr-20 pt-2" />
+                    <Bar
+                        ref="chart"
+                        :data="chartData"
+                        :options="chartOptions"
+                        class="w-30% h-full pr-20 pt-2"
+                    />
                 </div>
 
                 <div class="w-1/2">
-                    <button @click="showModal = true"
-                        class="w-[85%] text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]">
+                    <button
+                        @click="showModal = true"
+                        class="w-[85%] text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]"
+                    >
                         + Add Sleep Time
                     </button>
 
@@ -20,17 +31,25 @@
                         <label for="date" class="block text-sm font-medium">
                             Select Date
                         </label>
-                        <Datepicker v-if="isDatepickerVisible === 'start'" :isOpen="isDatepickerVisible === 'start'"
-                            :selected-date="selectedOutsideDate" v-model="selectedOutsideDate"
-                            @date-selected="setDateOutside" class="mt-1 right-0" />
+                        <Datepicker
+                            v-if="isDatepickerVisible === 'start'"
+                            :isOpen="isDatepickerVisible === 'start'"
+                            :selected-date="selectedOutsideDate"
+                            v-model="selectedOutsideDate"
+                            @date-selected="setDateOutside"
+                            class="mt-1 justify-center"
+                        />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white p-6 rounded-2xl w-[60%] h-[60%]">
+    <div
+        v-if="showModal"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    >
+        <div class="bg-white p-6 rounded-2xl w-[60%] h-[65%] justify-center">
             <h2 class="text-xl font-extrabold text-[#b28666] mb-4">
                 Enter Sleep Details
             </h2>
@@ -41,43 +60,81 @@
                         <label for="date" class="block text-sm font-medium">
                             Select Date
                         </label>
-                        <Datepicker v-if="isDatepickerVisible === 'start'" :isOpen="isDatepickerVisible === 'start'"
-                            :selected-date="selectedModalDate" v-model="selectedModalDate" @date-selected="setDateModal"
-                            class="mt-2" />
+                        <Datepicker
+                            v-if="isDatepickerVisible === 'start'"
+                            :isOpen="isDatepickerVisible === 'start'"
+                            :selected-date="selectedModalDate"
+                            v-model="selectedModalDate"
+                            @date-selected="setDateModal"
+                            class="mt-2"
+                        />
                     </div>
 
                     <div class="w-1/2 py-10">
                         <div class="mb-4">
-                            <label for="startSleep" class="block text-sm font-medium">Start Time</label>
+                            <label
+                                for="startSleep"
+                                class="block text-sm font-medium"
+                                >Start Time</label
+                            >
                             <div class="relative">
-                                <input v-model="startSleep" type="text" id="startSleep"
+                                <input
+                                    v-model="startSleep"
+                                    type="text"
+                                    id="startSleep"
                                     class="w-full p-2 border border-gray-300 rounded mt-1"
-                                    @focus="showTimePicker('start')" placeholder="Select Start Time" />
-                                <Timepicker v-if="isTimePickerOpen === 'start'" :isOpen="isTimePickerOpen === 'start'"
-                                    :initialTime="startSleep" @time-selected="handleStartTimeSelected"
-                                    @cancel-selection="handleCancelSelection" />
+                                    @focus="showTimePicker('start')"
+                                    placeholder="Select Start Time"
+                                />
+                                <Timepicker
+                                    v-if="isTimePickerOpen === 'start'"
+                                    :isOpen="isTimePickerOpen === 'start'"
+                                    :initialTime="startSleep"
+                                    @time-selected="handleStartTimeSelected"
+                                    @cancel-selection="handleCancelSelection"
+                                />
                             </div>
                         </div>
 
                         <div class="mb-4 pt-10">
-                            <label for="endSleep" class="block text-sm font-medium">End Time</label>
+                            <label
+                                for="endSleep"
+                                class="block text-sm font-medium"
+                                >End Time</label
+                            >
                             <div class="relative">
-                                <input v-model="endSleep" type="text" id="endSleep"
+                                <input
+                                    v-model="endSleep"
+                                    type="text"
+                                    id="endSleep"
                                     class="w-full p-2 border border-gray-300 rounded mt-1"
-                                    @focus="showTimePicker('end')" placeholder="Select End Time" />
-                                <Timepicker v-if="isTimePickerOpen === 'end'" :isOpen="isTimePickerOpen === 'end'"
-                                    :initialTime="endSleep" @time-selected="handleEndTimeSelected"
-                                    @cancel-selection="handleCancelSelection" />
+                                    @focus="showTimePicker('end')"
+                                    placeholder="Select End Time"
+                                />
+                                <Timepicker
+                                    v-if="isTimePickerOpen === 'end'"
+                                    :isOpen="isTimePickerOpen === 'end'"
+                                    :initialTime="endSleep"
+                                    @time-selected="handleEndTimeSelected"
+                                    @cancel-selection="handleCancelSelection"
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex justify-end mt-4 pt-4">
-                    <button type="button" @click="showModal = false" class="text-red-500 pr-[20%]">
+                    <button
+                        type="button"
+                        @click="showModal = false"
+                        class="text-red-500 pr-[20%]"
+                    >
                         Cancel
                     </button>
-                    <button type="submit" class="bg-[#B28666] text-white px-4 py-2 rounded-full hover:bg-[#8c6950]">
+                    <button
+                        type="submit"
+                        class="bg-[#B28666] text-white px-4 py-2 rounded-full hover:bg-[#8c6950]"
+                    >
                         Add Sleep
                     </button>
                 </div>
@@ -267,6 +324,7 @@ export default {
                 const weekDates = [];
                 let currentDay = new Date(startOfWeek);
 
+                //https://stackoverflow.com/questions/25159330/how-to-convert-an-iso-date-to-the-date-format-yyyy-mm-dd
                 while (currentDay <= endOfWeek) {
                     const formattedDate = currentDay
                         .toISOString()

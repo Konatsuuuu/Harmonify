@@ -90,6 +90,7 @@ export default {
                 const weekDates = [];
                 let currentDay = new Date(startOfWeek);
 
+                //https://stackoverflow.com/questions/25159330/how-to-convert-an-iso-date-to-the-date-format-yyyy-mm-dd
                 while (currentDay <= endOfWeek) {
                     const formattedDate = currentDay
                         .toISOString()
