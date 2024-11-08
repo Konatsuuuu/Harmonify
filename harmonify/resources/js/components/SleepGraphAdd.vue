@@ -43,6 +43,12 @@
                 >
                     Submit
                 </button>
+                <button
+                    @click="closeModal"
+                    class="bg-green-800 text-white py-2 px-4 rounded-lg hover:bg-green-700"
+                >
+                    Cancel
+                </button>
             </div>
         </div>
     </div>

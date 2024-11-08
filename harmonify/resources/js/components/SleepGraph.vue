@@ -18,12 +18,10 @@
                     <!-- Open modal when button is clicked -->
                     <button
                         @click="openModal"
-                        class="text-white bg-green-800 hover:bg-green-900 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-700 dark:hover:bg-green-800"
+                        class="text-white bg-green-800 hover:bg-green-900 focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-green-700 dark:hover:bg-green-800"
                     >
                         + Add Sleep Time
                     </button>
-
-                    <VueDatePicker v-model="date"></VueDatePicker>
                 </div>
             </div>
         </div>
