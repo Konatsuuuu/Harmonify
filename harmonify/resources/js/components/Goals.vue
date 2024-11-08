@@ -4,7 +4,7 @@
             :model-value="value"
             :size="200"
             :width="30"
-            color="teal"
+            color="#b28666"
             class="relative"
             style="top: -40px"
         >
@@ -12,7 +12,7 @@
         </v-progress-circular>
 
         <p
-            class="text-4 font-bold text-[#282e2f] relative underline"
+            class="text-4 font-bold text-[#b28666] relative underline"
             style="top: -40px"
         >
             To-Do-List
@@ -28,7 +28,7 @@
                     type="checkbox"
                     v-model="task.completed"
                     @change="updateProgress"
-                    class="text-4 font-bold text-[#282e2f] mx-2 relative"
+                    class="text-4 font-bold text-[#b28666] mx-2 relative"
                 />
                 <span :class="{ completed: task.completed }">{{
                     task.name

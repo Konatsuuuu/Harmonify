@@ -3,9 +3,9 @@
         class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden"
     >
         <div
-            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#040505]"
+            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#b28666]"
         >
-            <div class="flex items-center mb-3 ml-4 space-x-3 text-[#040505]">
+            <div class="flex items-center mb-3 ml-4 space-x-3 text-[#b28666]">
                 <BackButton />
                 <p class="text-3xl font-bold">Sleep Graph</p>
             </div>
@@ -18,7 +18,7 @@
                     <!-- Open modal when button is clicked -->
                     <button
                         @click="openModal"
-                        class="text-white bg-green-800 hover:bg-green-900 focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-green-700 dark:hover:bg-green-800"
+                        class="text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]"
                     >
                         + Add Sleep Time
                     </button>
@@ -45,7 +45,7 @@
                             datepicker-buttons
                             datepicker-autoselect-today
                             type="text"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="datepicker-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-milktea focus:border-milktea block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-milktea dark:focus:border-milktea"
                             placeholder="Select date"
                         />
                     </div>
@@ -107,8 +107,8 @@ export default {
                     {
                         label: "Sleep Duration (hrs)", // Label for the chart
                         data: [6, 7, 5, 8, 6, 7, 9], // Example data
-                        backgroundColor: "396b4a", // Bar color
-                        borderColor: "#396b4a", // Border color
+                        backgroundColor: "#b28666", // Bar color
+                        borderColor: "#b28666", // Border color
                         borderWidth: 1,
                     },
                 ],

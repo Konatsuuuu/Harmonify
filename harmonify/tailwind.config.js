@@ -8,6 +8,9 @@ export default {
     ],
     theme: {
         extend: {},
+        colors: {
+            primary: { milktea: "#b28666" },
+        },
     },
     plugins: [require("flowbite/plugin")],
 };
