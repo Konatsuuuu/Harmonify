@@ -37,6 +37,7 @@ export default {
         Bar,
     },
 
+    // https://www.chartjs.org/docs/latest/charts/bar.html (bar chart)
     data() {
         return {
             chartData: {
