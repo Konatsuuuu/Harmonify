@@ -45,7 +45,6 @@
         </div>
     </div>
 
-    <!-- Modal -->
     <div
         v-if="showModal"
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
@@ -267,7 +266,7 @@ export default {
         },
 
         setDateModal(date) {
-            this.selectedModalDate = date; // Update the modal Datepicker date
+            this.selectedModalDate = date;
         },
 
         showTimePicker(type) {
@@ -298,13 +297,11 @@ export default {
 
             const dayOfWeek = date.getDay();
 
-            // Calculate the start of the week (Sunday)
             const startOfWeek = new Date(date);
-            startOfWeek.setDate(date.getDate() - dayOfWeek); // Adjust to Sunday of the selected week
+            startOfWeek.setDate(date.getDate() - dayOfWeek);
 
-            // Calculate the end of the week (Saturday)
             const endOfWeek = new Date(startOfWeek);
-            endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday of the same week
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
 
             console.log("Raw Start of the Week:", startOfWeek);
             console.log("Raw End of the Week:", endOfWeek);
@@ -377,7 +374,7 @@ export default {
                 datasets: [
                     {
                         // https://www.chartjs.org/docs/latest/samples/area/line-datasets.html
-                        label: "Sleep Duration (Hours)", // Label for the dataset
+                        label: "Sleep Duration (Hours)",
                         backgroundColor: "#b28666",
                         borderRadius: 10,
                         data: sleepDurations,

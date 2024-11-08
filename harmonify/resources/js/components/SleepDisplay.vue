@@ -60,17 +60,14 @@ export default {
     },
     methods: {
         getCurrentWeekStartEndDates() {
-            // Get the current date and calculate the start (Sunday) and end (Saturday) of the week
             const today = new Date();
-            const dayOfWeek = today.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
+            const dayOfWeek = today.getDay();
 
-            // Calculate the start of the week (Sunday)
             const startOfWeek = new Date(today);
-            startOfWeek.setDate(today.getDate() - dayOfWeek); // Adjust to Sunday
+            startOfWeek.setDate(today.getDate() - dayOfWeek);
 
-            // Calculate the end of the week (Saturday)
             const endOfWeek = new Date(startOfWeek);
-            endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday of the same week
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
 
             return { startOfWeek, endOfWeek };
         },
@@ -95,10 +92,9 @@ export default {
                 while (currentDay <= endOfWeek) {
                     const formattedDate = currentDay
                         .toISOString()
-                        .substring(0, 10); // Format as YYYY-MM-DD
+                        .substring(0, 10);
                     weekDates.push(formattedDate);
 
-                    // Fetch data from Firestore for the specific date
                     const sleepDocRef = doc(
                         db,
                         "users",
@@ -121,7 +117,6 @@ export default {
                         sleepDurations.push(0);
                     }
 
-                    // Move to the next day
                     currentDay.setDate(currentDay.getDate() + 1);
                 }
 
@@ -148,7 +143,6 @@ export default {
                 ],
             };
 
-            // Refresh the chart
             const chartInstance = this.$refs.chart.chart;
             if (chartInstance) {
                 chartInstance.update();

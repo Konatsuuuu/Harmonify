@@ -70,13 +70,13 @@ export default {
         let initialHour, initialMinute, selectedMinute;
 
         if (this.initialTime) {
-            initialHour = new Date(this.initialTime).getHours();
+            initialHour = new Date(this.initialTime).getHours() || 0;
         } else {
             initialHour = 0;
         }
 
         if (this.initialTime) {
-            initialHour = new Date(this.initialTime).getMinutes();
+            initialHour = new Date(this.initialTime).getMinutes() || 0;
         } else {
             initialHour = 0;
         }
@@ -114,6 +114,14 @@ export default {
                 formattedHour = "0" + this.selectedHour;
             } else {
                 formattedHour = this.selectedHour;
+            }
+
+            if (this.selectedHour === null || isNaN(this.selectedHour)) {
+                formattedHour = "00";
+            }
+
+            if (this.selectedMinute === null || isNaN(this.selectedMinute)) {
+                formattedMinute = "00";
             }
 
             const timeString = `${formattedHour}:${formattedMinute}`;
