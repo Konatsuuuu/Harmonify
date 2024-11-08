@@ -203,7 +203,7 @@
                             Posts
                         </p>
                         <div
-                            class="flex-1 flex items-end justify-end mr-4 ml-2 mb-4"
+                            class="flex-1 flex items-end justify-end mt-48 ml-2 mb-4"
                         >
                             <ExpandPosts />
                         </div>
@@ -213,7 +213,7 @@
                             Sleep Graph
                         </p>
                         <div
-                            class="flex-1 flex items-end justify-end mr-4 ml-2 mb-4"
+                            class="flex-1 flex items-end justify-end mt-48 ml-2 mb-4"
                         >
                             <ExpandSleepGraph />
                         </div>
