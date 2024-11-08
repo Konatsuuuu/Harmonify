@@ -71,7 +71,6 @@
                         />
                     </div>
 
-                    <!-- Time Pickers (Start Time and End Time) -->
                     <div class="w-1/2 py-10">
                         <div class="mb-4">
                             <label
@@ -146,11 +145,12 @@
 </template>
 
 <script>
-import { db, auth, setDoc, collection, getDoc, doc } from "@/firebaseConfig"; // Firebase imports
-import { onAuthStateChanged } from "firebase/auth"; // Firebase auth listener
-import Timepicker from "./Timepicker.vue"; // Timepicker component
-import Datepicker from "./Datepicker.vue"; // Datepicker component
-import { Bar } from "vue-chartjs"; // Chart.js component
+import { db, auth, setDoc, collection, getDoc, doc } from "@/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import Timepicker from "./Timepicker.vue";
+import Datepicker from "./Datepicker.vue";
+import BackButton from "./BackButton.vue";
+import { Bar } from "vue-chartjs";
 import {
     Chart as ChartJS,
     Title,
@@ -159,10 +159,8 @@ import {
     BarElement,
     CategoryScale,
     LinearScale,
-} from "chart.js"; // Chart.js setup
-import BackButton from "./BackButton.vue"; // BackButton component
+} from "chart.js";
 
-// Registering chart.js components globally
 ChartJS.register(
     Title,
     Tooltip,
@@ -186,11 +184,11 @@ export default {
             isDatepickerVisible: "start",
             isTimePickerOpen: null,
             chartData: {
-                labels: ["S", "M", "T", "W", "T", "F", "S"], // Placeholder for day labels
+                // labels: ["S", "M", "T", "W", "T", "F", "S"],
                 datasets: [
                     {
                         label: "Sleep Duration (hrs)",
-                        data: [0, 0, 0, 0, 0, 0, 0], // Placeholder data for sleep durations
+                        data: [0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: "#b28666",
                         borderColor: "#b28666",
                         borderWidth: 0,
@@ -206,13 +204,27 @@ export default {
                         text: "Sleep Duration Per Day (Week)",
                     },
                 },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Dates",
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Hours",
+                        },
+                    },
+                },
             },
-            selectedOutsideDate: "", // Selected date from Datepicker (outside modal)
-            selectedModalDate: "", // Selected date inside the modal
-            startSleep: "", // Start time
-            endSleep: "", // End time
-            sleepDuration: "", // Duration of sleep (calculated)
-            userId: null, // Firebase user ID
+            selectedOutsideDate: "",
+            selectedModalDate: "",
+            startSleep: "",
+            endSleep: "",
+            sleepDuration: "",
+            userId: null,
         };
     },
 
@@ -276,7 +288,6 @@ export default {
             this.isTimePickerOpen = null;
         },
         getWeekStartEndDates(selectedDate) {
-            // Validate the selected date
             const date = new Date(selectedDate);
             if (isNaN(date)) {
                 console.error("Invalid date provided:", selectedDate);
@@ -285,7 +296,6 @@ export default {
                 );
             }
 
-            // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
             const dayOfWeek = date.getDay();
 
             // Calculate the start of the week (Sunday)
@@ -302,10 +312,9 @@ export default {
             return { startOfWeek, endOfWeek };
         },
 
-        // Method to fetch the sleep durations for the entire week
         async fetchWeeklySleepData(selectedDate) {
             try {
-                selectedDate = selectedDate || new Date(); // Use today's date if none is provided
+                selectedDate = selectedDate || new Date();
 
                 const { startOfWeek, endOfWeek } =
                     this.getWeekStartEndDates(selectedDate);
@@ -351,38 +360,31 @@ export default {
                         sleepDurations.push(0);
                     }
 
-                    // Move to the next day safely
                     currentDay = new Date(currentDay);
                     currentDay.setDate(currentDay.getDate() + 1);
                 }
 
                 console.log("Sleep Durations for the Week:", sleepDurations);
-
-                // Update the chart
                 this.updateChartData(sleepDurations, weekDates);
             } catch (error) {
                 console.error("Error fetching sleep data:", error);
             }
         },
 
-        // Method to update the chart data
         updateChartData(sleepDurations, weekDates) {
             this.chartData = {
-                labels: weekDates, // Set the week dates on the x-axis
+                labels: weekDates,
                 datasets: [
                     {
                         // https://www.chartjs.org/docs/latest/samples/area/line-datasets.html
                         label: "Sleep Duration (Hours)", // Label for the dataset
                         backgroundColor: "#b28666",
-                        borderColor: "#b28666",
-                        borderWidth: 0, // Width of the bar borders
                         borderRadius: 10,
-                        data: sleepDurations, // Set the sleep durations as the data for the y-axis
+                        data: sleepDurations,
                     },
                 ],
             };
 
-            // Access the Chart.js instance and refresh the chart
             const chartInstance = this.$refs.chart.chart;
             if (chartInstance) {
                 chartInstance.update();
@@ -391,14 +393,13 @@ export default {
             }
         },
 
-        // Called when a date is selected outside the modal
         setDateOutside(date) {
-            this.selectedOutsideDate = date; // Update the selected date outside the modal
+            this.selectedOutsideDate = date;
             console.log(
                 "Selected Date (outside modal):",
                 this.selectedOutsideDate
-            ); // Log the selected date
-            this.fetchWeeklySleepData(this.selectedOutsideDate); // Fetch sleep data for the entire week
+            );
+            this.fetchWeeklySleepData(this.selectedOutsideDate);
         },
     },
 

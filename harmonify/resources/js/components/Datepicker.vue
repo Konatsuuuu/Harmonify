@@ -3,7 +3,6 @@
         v-if="isOpen"
         class="absolute z-10 bg-white border border-gray-300 rounded-md shadow-lg mt-1 w-[28%]"
     >
-        <!-- Year and Month Navigation -->
         <div class="flex justify-between items-center p-2">
             <button
                 @click="changeMonth(-1)"
@@ -23,9 +22,11 @@
                     />
                 </svg>
             </button>
+
             <div class="text-lg font-bold">
                 {{ currentMonth }} {{ currentYear }}
             </div>
+
             <button
                 @click="changeMonth(+1)"
                 class="w-8 h-8 text-lg font-bold text-[#B28666] focus:outline-none rounded-full text-center me-2 mb-2"
@@ -46,11 +47,10 @@
             </button>
         </div>
 
-        <!-- Days of the Week -->
         <div
             class="grid grid-cols-7 gap-1 p-1 text-center font-semibold text-sm text-gray-600"
         >
-            <div v-for="day in days" :key="day" class="py-1">{{ day }}</div>
+            <div v-for="day in weekdays" :key="day" class="py-1">{{ day }}</div>
         </div>
 
         <!-- Dates Grid -->
@@ -97,7 +97,7 @@ export default {
             currentMonth: new Date().toLocaleString("default", {
                 month: "long",
             }),
-            days: ["S", "M", "T", "W", "T", "F", "S"],
+            weekdays: ["S", "M", "T", "W", "T", "F", "S"],
             dates: [],
         };
     },
@@ -145,10 +145,6 @@ export default {
         },
 
         selectToday() {
-            // this.date-selected = `${today.getFullYear()}-${this.formatMonth(
-            //     today.getMonth() + 1
-            // )}-${this.formatDay(today.getDate())}`;
-
             const today = new Date();
             const formattedToday = `${today.getFullYear()}-${this.formatMonth(
                 today.getMonth() + 1
@@ -158,11 +154,19 @@ export default {
         },
 
         formatMonth(month) {
-            return month < 10 ? `0${month}` : month;
+            if (month < 10) {
+                return `0${month}`;
+            } else {
+                return month;
+            }
         },
 
         formatDay(day) {
-            return day < 10 ? `0${day}` : day;
+            if (day < 10) {
+                return `0${day}`;
+            } else {
+                return day;
+            }
         },
 
         formatDate(date) {

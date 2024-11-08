@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import { db, auth, getDoc, doc } from "@/firebaseConfig"; // Firebase imports
-import { onAuthStateChanged } from "firebase/auth"; // Firebase auth listener
-import { Bar } from "vue-chartjs"; // Chart.js component
+import { db, auth, getDoc, doc } from "@/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import { Bar } from "vue-chartjs";
 import {
     Chart as ChartJS,
     Title,
@@ -21,9 +21,8 @@ import {
     BarElement,
     CategoryScale,
     LinearScale,
-} from "chart.js"; // Chart.js setup
+} from "chart.js";
 
-// Registering chart.js components globally
 ChartJS.register(
     Title,
     Tooltip,
@@ -41,11 +40,11 @@ export default {
     data() {
         return {
             chartData: {
-                labels: ["S", "M", "T", "W", "T", "F", "S"], // Day labels (Sunday-Saturday)
+                labels: ["S", "M", "T", "W", "T", "F", "S"],
                 datasets: [
                     {
                         label: "Sleep Duration (hrs)",
-                        data: [0, 0, 0, 0, 0, 0, 0], // Placeholder data
+                        data: [0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: "#b28666",
                         borderColor: "#b28666",
                         borderWidth: 0,
@@ -56,7 +55,7 @@ export default {
             chartOptions: {
                 responsive: true,
             },
-            userId: null, // Firebase user ID
+            userId: null,
         };
     },
     methods: {
@@ -128,7 +127,6 @@ export default {
 
                 console.log("Sleep Durations for the Week:", sleepDurations);
 
-                // Update the chart with the fetched sleep data
                 this.updateChartData(sleepDurations, weekDates);
             } catch (error) {
                 console.error("Error fetching sleep data:", error);
@@ -137,7 +135,7 @@ export default {
 
         updateChartData(sleepDurations, weekDates) {
             this.chartData = {
-                labels: ["S", "M", "T", "W", "T", "F", "S"], // Day labels (Sunday-Saturday)
+                labels: ["S", "M", "T", "W", "T", "F", "S"],
                 datasets: [
                     {
                         label: "Sleep Duration (Hours)",
@@ -145,7 +143,7 @@ export default {
                         borderColor: "#b28666",
                         borderWidth: 0,
                         borderRadius: 10,
-                        data: sleepDurations, // Sleep durations
+                        data: sleepDurations,
                     },
                 ],
             };
@@ -161,12 +159,11 @@ export default {
     },
 
     mounted() {
-        // Listen for authentication state changes and fetch the data once the user is authenticated
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.userId = user.uid;
                 console.log("User ID:", this.userId);
-                this.fetchWeeklySleepData(); // Fetch data for the current week
+                this.fetchWeeklySleepData();
             } else {
                 console.warn("No user is signed in.");
             }

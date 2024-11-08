@@ -19,8 +19,7 @@
                         class="border w-20 border-gray-500 rounded-md p-1 text-sm"
                     >
                         <option v-for="n in 24" :key="n - 1" :value="n - 1">
-                            {{ n - 1 < 10 ? "0" + n - 1 : n - 1 }}
-                            <!-- Format hours with leading zero if needed -->
+                            {{ formatNumber(n - 1) }}
                         </option>
                     </select>
                 </div>
@@ -35,14 +34,13 @@
                         class="border w-20 border-gray-300 rounded-md p-1 text-sm"
                     >
                         <option v-for="n in 60" :key="n" :value="n - 1">
-                            {{ n - 1 < 10 ? "0" + (n - 1) : n - 1 }}
+                            {{ formatNumber(n - 1) }}
                         </option>
                     </select>
                 </div>
             </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="flex justify-between items-center p-3">
             <button
                 @click="cancelSelection"
@@ -65,34 +63,60 @@
 export default {
     props: {
         isOpen: Boolean,
-        initialTime: String, // Optional: initial time to prefill the fields
+        initialTime: String,
     },
     data() {
         const now = new Date();
-        const initialHour = this.initialTime
-            ? new Date(this.initialTime).getHours()
-            : 0;
-        const initialMinute = this.initialTime
-            ? new Date(this.initialTime).getMinutes()
-            : 0;
+        let initialHour, initialMinute, selectedMinute;
+
+        if (this.initialTime) {
+            initialHour = new Date(this.initialTime).getHours();
+        } else {
+            initialHour = 0;
+        }
+
+        if (this.initialTime) {
+            initialHour = new Date(this.initialTime).getMinutes();
+        } else {
+            initialHour = 0;
+        }
+
+        if (initialMinute < 10) {
+            selectedMinute = "0" + initialMinute;
+        } else {
+            selectedMinute = initialMinute;
+        }
 
         return {
             selectedHour: initialHour,
-            selectedMinute:
-                initialMinute < 10 ? "0" + initialMinute : initialMinute, // Ensure two-digit format for minutes
+            selectedMinute: selectedMinute,
         };
     },
     methods: {
+        formatNumber(n) {
+            if (n < 10) {
+                return `0${n}`;
+            } else {
+                return n;
+            }
+        },
+
         confirmSelection() {
-            const formattedMinute =
-                this.selectedMinute < 10
-                    ? "0" + this.selectedMinute
-                    : this.selectedMinute;
-            const timeString = `${
-                this.selectedHour < 10
-                    ? "0" + this.selectedHour
-                    : this.selectedHour
-            }:${formattedMinute}`;
+            let formattedMinute;
+            if (this.selectedMinute < 10) {
+                formattedMinute = "0" + this.selectedMinute;
+            } else {
+                formattedMinute = this.selectedMinute;
+            }
+
+            let formattedHour;
+            if (this.selectedHour < 10) {
+                formattedHour = "0" + this.selectedHour;
+            } else {
+                formattedHour = this.selectedHour;
+            }
+
+            const timeString = `${formattedHour}:${formattedMinute}`;
             this.$emit("time-selected", timeString);
         },
 
