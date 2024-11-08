@@ -18,8 +18,9 @@
                         v-model="selectedHour"
                         class="border w-20 border-gray-500 rounded-md p-1 text-sm"
                     >
-                        <option v-for="n in 24" :key="n" :value="n">
-                            {{ n < 10 ? "0" + n : n }}
+                        <option v-for="n in 24" :key="n - 1" :value="n - 1">
+                            {{ n - 1 < 10 ? "0" + n - 1 : n - 1 }}
+                            <!-- Format hours with leading zero if needed -->
                         </option>
                     </select>
                 </div>
@@ -33,12 +34,8 @@
                         v-model="selectedMinute"
                         class="border w-20 border-gray-300 rounded-md p-1 text-sm"
                     >
-                        <option
-                            v-for="n in 60"
-                            :key="n"
-                            :value="n < 10 ? '0' + n : n"
-                        >
-                            {{ n < 10 ? "0" + n : n }}
+                        <option v-for="n in 60" :key="n" :value="n - 1">
+                            {{ n - 1 < 10 ? "0" + (n - 1) : n - 1 }}
                         </option>
                     </select>
                 </div>
@@ -47,7 +44,6 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-between items-center p-3">
-            <!-- Cancel Button -->
             <button
                 @click="cancelSelection"
                 class="w-20 h-10 text-sm font-semibold text-gray-600 hover:underline"
@@ -55,7 +51,6 @@
                 Cancel
             </button>
 
-            <!-- OK Button -->
             <button
                 @click="confirmSelection"
                 class="w-20 h-10 text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-sm rounded-full text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950] hover:underline"
@@ -74,13 +69,12 @@ export default {
     },
     data() {
         const now = new Date();
-        // Initialize to 00:00 if no initial time is provided
         const initialHour = this.initialTime
             ? new Date(this.initialTime).getHours()
-            : 0; // Default to 00 (midnight) if no initial time
+            : 0;
         const initialMinute = this.initialTime
             ? new Date(this.initialTime).getMinutes()
-            : 0; // Default to 00 minutes if no initial time
+            : 0;
 
         return {
             selectedHour: initialHour,
@@ -89,13 +83,19 @@ export default {
         };
     },
     methods: {
-        // Confirm the selection and emit it to the parent component
         confirmSelection() {
-            const timeString = `${this.selectedHour}:${this.selectedMinute}`;
+            const formattedMinute =
+                this.selectedMinute < 10
+                    ? "0" + this.selectedMinute
+                    : this.selectedMinute;
+            const timeString = `${
+                this.selectedHour < 10
+                    ? "0" + this.selectedHour
+                    : this.selectedHour
+            }:${formattedMinute}`;
             this.$emit("time-selected", timeString);
         },
 
-        // Cancel the selection and close the time picker
         cancelSelection() {
             this.$emit("cancel-selection");
         },

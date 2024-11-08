@@ -50,9 +50,7 @@
         <div
             class="grid grid-cols-7 gap-1 p-1 text-center font-semibold text-sm text-gray-600"
         >
-            <div v-for="day in days" :key="day" class="py-1">
-                {{ day }}
-            </div>
+            <div v-for="day in days" :key="day" class="py-1">{{ day }}</div>
         </div>
 
         <!-- Dates Grid -->
@@ -101,7 +99,6 @@ export default {
             }),
             days: ["S", "M", "T", "W", "T", "F", "S"],
             dates: [],
-            selectedDate: null,
         };
     },
     watch: {
@@ -136,24 +133,28 @@ export default {
             this.dates = dates;
         },
 
-        // Select a date but don't close the calendar
         selectDate(date) {
             if (date) {
-                this.selectedDate = `${this.currentYear}-${this.formatMonth(
-                    this.currentMonthIndex + 1
-                )}-${this.formatDay(date)}`;
+                this.$emit(
+                    "date-selected",
+                    `${this.currentYear}-${this.formatMonth(
+                        this.currentMonthIndex + 1
+                    )}-${this.formatDay(date)}`
+                );
             }
         },
 
         selectToday() {
+            // this.date-selected = `${today.getFullYear()}-${this.formatMonth(
+            //     today.getMonth() + 1
+            // )}-${this.formatDay(today.getDate())}`;
+
             const today = new Date();
-            this.selectedDate = `${today.getFullYear()}-${this.formatMonth(
+            const formattedToday = `${today.getFullYear()}-${this.formatMonth(
                 today.getMonth() + 1
             )}-${this.formatDay(today.getDate())}`;
-        },
 
-        cancelSelection() {
-            this.$emit("cancel-selection");
+            this.$emit("date-selected", formattedToday);
         },
 
         formatMonth(month) {

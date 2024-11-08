@@ -33,8 +33,9 @@
                         <Datepicker
                             v-if="isDatepickerVisible === 'start'"
                             :isOpen="isDatepickerVisible === 'start'"
-                            :selectedDate="date"
-                            @date-selected="setDate"
+                            :selected-date="selectedOutsideDate"
+                            v-model="selectedOutsideDate"
+                            @date-selected="setDateOutside"
                             class="mt-2"
                         />
                     </div>
@@ -62,8 +63,9 @@
                         <Datepicker
                             v-if="isDatepickerVisible === 'start'"
                             :isOpen="isDatepickerVisible === 'start'"
-                            :selectedDate="date"
-                            @date-selected="setDate"
+                            :selected-date="selectedModalDate"
+                            v-model="selectedModalDate"
+                            @date-selected="setDateModal"
                             class="mt-2"
                         />
                     </div>
@@ -147,6 +149,7 @@ import { db, auth, setDoc, collection, getDocs, doc } from "@/firebaseConfig"; /
 import { onAuthStateChanged } from "firebase/auth"; // Firebase auth listener
 import Timepicker from "./Timepicker.vue"; // Timepicker component
 import Datepicker from "./Datepicker.vue"; // Datepicker component
+import { ref } from "vue";
 import { Bar } from "vue-chartjs"; // Chart.js component
 import {
     Chart as ChartJS,
@@ -158,6 +161,7 @@ import {
     LinearScale,
 } from "chart.js"; // Chart.js setup
 import BackButton from "./BackButton.vue"; // BackButton component
+import { VueElement } from "vue";
 
 // Registering chart.js components globally
 ChartJS.register(
@@ -180,7 +184,7 @@ export default {
     data() {
         return {
             showModal: false,
-            isDatepickerVisible: "start",
+            isDatepickerVisible: "start", // This controls the visibility of the date picker
             isTimePickerOpen: null,
             chartData: {
                 labels: ["S", "M", "T", "W", "T", "F", "S"], // Placeholder for day labels
@@ -204,7 +208,8 @@ export default {
                     },
                 },
             },
-            date: "", // Selected date from Datepicker
+            selectedOutsideDate: "", // Selected date from Datepicker (outside modal)
+            selectedModalDate: "", // Selected date inside the modal
             startSleep: "", // Start time
             endSleep: "", // End time
             sleepDuration: "", // Duration of sleep (calculated)
@@ -214,46 +219,37 @@ export default {
 
     methods: {
         async submitSleepForm() {
-            // Calculate the sleep duration in hours
-            const startTime = new Date(`${this.date} ${this.startSleep}`);
-            const endTime = new Date(`${this.date} ${this.endSleep}`);
+            const startTime = new Date(
+                `${this.selectedModalDate} ${this.startSleep}`
+            );
+            const endTime = new Date(
+                `${this.selectedModalDate} ${this.endSleep}`
+            );
 
             if (endTime < startTime) {
-                // Handle overnight sleep by adjusting the end time to the next day
-                endTime.setDate(endTime.getDate() + 1);
+                endTime.setDate(endTime.getDate() + 1); // Handle overnight sleep
             }
 
             this.sleepDuration = (endTime - startTime) / 3600000; // Duration in hours
 
-            console.log("Sleep Start Date:", this.date);
-            console.log("Start Time:", this.startSleep);
-            console.log("End Time:", this.endSleep);
-            console.log("Sleep Duration:", this.sleepDuration);
-
-            // Save the sleep data to Firestore
             if (this.userId) {
-                try {
-                    const sleepDocRef = doc(
-                        db,
-                        "users",
-                        this.userId,
-                        "sleep", // Subcollection 'sleep' under the user
-                        `${this.date}` // Use the selected date as the document ID
-                    );
-                    await setDoc(sleepDocRef, {
-                        date: this.date,
-                        startSleep: this.startSleep,
-                        endSleep: this.endSleep,
-                        sleepDuration: this.sleepDuration,
-                        userId: this.userId,
-                    });
-                    console.log("Sleep data saved successfully!");
+                const sleepDocRef = doc(
+                    db,
+                    "users",
+                    this.userId,
+                    "sleep",
+                    `${this.selectedModalDate}`
+                );
+                await setDoc(sleepDocRef, {
+                    selectedDate: this.selectedModalDate,
+                    startSleep: this.startSleep,
+                    endSleep: this.endSleep,
+                    sleepDuration: this.sleepDuration,
+                    userId: this.userId,
+                });
 
-                    this.showModal = false;
-                    this.fetchSleepData(); // Refresh the sleep data for the graph
-                } catch (error) {
-                    console.error("Error saving sleep data:", error);
-                }
+                this.showModal = false; // Close the modal
+                this.fetchSleepData(); // Refresh the chart with updated data
             }
         },
 
@@ -272,7 +268,6 @@ export default {
                 const sleepSnapshot = await getDocs(userDocRef);
                 const sleepData = sleepSnapshot.docs.map((doc) => doc.data());
 
-                // Update chart data with fetched sleep durations
                 const weekData = ["S", "M", "T", "W", "T", "F", "S"];
                 const sleepDurations = weekData.map((day) => {
                     const dayData = sleepData.find(
@@ -281,33 +276,47 @@ export default {
                     return dayData ? dayData.sleepDuration : 0;
                 });
 
-                // Update chart with sleep data
                 this.chartData.datasets[0].data = sleepDurations;
             } catch (error) {
                 console.error("Error fetching sleep data:", error);
             }
         },
 
-        setDate(date) {
-            this.date = date; // Set the selected date from the Datepicker
+        setDateOutside(date) {
+            this.selectedOutsideDate = date; // Update the outside Datepicker date
+            this.updateChartData();
+        },
+
+        setDateModal(date) {
+            this.selectedModalDate = date; // Update the modal Datepicker date
+            this.updateChartData();
+        },
+
+        updateChartData() {
+            // This method updates the chart immediately after the date is selected
+            console.log(
+                "Updated selected date:",
+                this.selectedModalDate || this.selectedOutsideDate
+            );
+            // Optionally, you can fetch or process new data for the chart based on the selected date
         },
 
         showTimePicker(type) {
-            this.isTimePickerOpen = type; // Show the timepicker for 'start' or 'end'
+            this.isTimePickerOpen = type;
         },
 
         handleStartTimeSelected(time) {
             this.startSleep = time;
-            this.isTimePickerOpen = null; // Close the timepicker after selecting a time
+            this.isTimePickerOpen = null;
         },
 
         handleEndTimeSelected(time) {
             this.endSleep = time;
-            this.isTimePickerOpen = null; // Close the timepicker after selecting a time
+            this.isTimePickerOpen = null;
         },
 
         handleCancelSelection() {
-            this.isTimePickerOpen = null; // Close the timepicker without saving the time
+            this.isTimePickerOpen = null;
         },
     },
 
@@ -315,8 +324,7 @@ export default {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.userId = user.uid;
-                console.log("User ID:", this.userId);
-                this.fetchSleepData(); // Fetch existing sleep data for the graph
+                this.fetchSleepData();
             } else {
                 console.warn("No user is signed in.");
             }
