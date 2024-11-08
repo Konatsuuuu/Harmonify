@@ -3,9 +3,11 @@
         class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden"
     >
         <div
-            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#50858B]"
+            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-primary-milktea"
         >
-            <div class="flex items-center mb-3 ml-4 space-x-3 text-[#50858B]">
+            <div
+                class="flex items-center mb-3 ml-4 space-x-3 text-primary-milktea"
+            >
                 <BackButton />
                 <p class="text-3xl font-bold">Posts</p>
             </div>
