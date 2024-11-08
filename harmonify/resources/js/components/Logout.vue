@@ -21,17 +21,17 @@
             v-if="showPopUp"
             class="absolute right-5 mt-2 p-4 bg-white rounded-lg shadow-sm text-center z-10"
         >
-            <div class="text-xl text-[#50858B]">Logout?</div>
+            <div class="text-xl text-[#B28666]">Logout?</div>
             <div class="mt-1 flex justify-center">
                 <button
                     @click="logout"
-                    class="m-1 px-4 py-2 bg-[#50858B] text-white rounded-lg"
+                    class="m-1 px-4 py-2 bg-[#B28666] text-white rounded-lg"
                 >
                     Yes
                 </button>
                 <button
                     @click="togglePopUp"
-                    class="m-1 px-4 py-2 bg-[#A1D2CE] text-white rounded-lg"
+                    class="m-1 px-4 py-2 bg-[#b28666a0] text-white rounded-lg"
                 >
                     Cancel
                 </button>
