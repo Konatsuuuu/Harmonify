@@ -254,14 +254,6 @@ export default {
             }
         },
 
-        // updateChart() {
-        //     this.fetchSleepData(); // Refresh data when "Update" button is clicked
-        // },
-
-        // setDateOutside(date) {
-        //     this.selectedOutsideDate = date; // Update the outside Datepicker date
-        // },
-
         setDateModal(date) {
             this.selectedModalDate = date; // Update the modal Datepicker date
         },
@@ -383,7 +375,8 @@ export default {
                         label: "Sleep Duration (Hours)", // Label for the dataset
                         backgroundColor: "#b28666",
                         borderColor: "#b28666",
-                        borderWidth: 1, // Width of the bar borders
+                        borderWidth: 0, // Width of the bar borders
+                        borderRadius: 10,
                         data: sleepDurations, // Set the sleep durations as the data for the y-axis
                     },
                 ],

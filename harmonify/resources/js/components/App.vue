@@ -664,6 +664,8 @@ C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z"
                         <p class="text-2xl font-bold m-3 ml-6 text-[#b28666]">
                             Sleep Graph
                         </p>
+                        <SleepDisplay />
+
                         <div
                             class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4"
                         >
@@ -695,6 +697,7 @@ import ExpandPosts from "./ExpandPosts.vue";
 import Goals from "./Goals.vue";
 import DashboardCalendar from "./DashboardCalendar.vue";
 import DashboardPost from "./DashboardPost.vue";
+import SleepDisplay from "./SleepDisplay.vue";
 
 export default {
     components: {
@@ -705,6 +708,7 @@ export default {
         Goals,
         DashboardCalendar,
         DashboardPost,
+        SleepDisplay,
     },
     mounted() {
         onAuthStateChanged(auth, (user) => {
