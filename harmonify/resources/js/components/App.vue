@@ -198,22 +198,24 @@
                 </div>
 
                 <div class="w-1/4 rounded-xl flex flex-col">
-                    <div class="h-1/2 bg-white/30 mr-5 mb-5 rounded-xl">
+                    <div
+                        class="relative h-1/2 bg-white/30 mr-5 mb-5 rounded-xl"
+                    >
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                             Posts
                         </p>
                         <div
-                            class="flex-1 flex items-end justify-end mt-48 ml-2 mb-4"
+                            class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4"
                         >
                             <ExpandPosts />
                         </div>
                     </div>
-                    <div class="h-1/2 bg-white/30 mr-5 rounded-xl">
+                    <div class="relative h-1/2 bg-white/30 mr-5 rounded-xl">
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                             Sleep Graph
                         </p>
                         <div
-                            class="flex-1 flex items-end justify-end mt-48 ml-2 mb-4"
+                            class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4"
                         >
                             <ExpandSleepGraph />
                         </div>
