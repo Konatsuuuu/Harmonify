@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 .backgroundImg {
-    background-image: url("bg.jpg");
-    /* background-image: linear-gradient(to bottom right, #dae9d9, #aac156);
-    background-size: cover; */
+    background-image: url("/public/svg/background_img.svg");
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
