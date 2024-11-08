@@ -37,13 +37,8 @@
                             :selected-date="selectedOutsideDate"
                             v-model="selectedOutsideDate"
                             @date-selected="setDateOutside"
-                            class="mt-2"
+                            class="mt-1"
                         />
-
-                        <!-- <p class="text-[#b28666] align-bottom">
-                            By selecteing a date, you will be able to see the
-                            weekly sleep data of the selected date
-                        </p> -->
                     </div>
                 </div>
             </div>
@@ -182,13 +177,13 @@ export default {
         Timepicker,
     },
 
+    // https://www.chartjs.org/docs/latest/charts/bar.html (bar chart)
     data() {
         return {
             showModal: false,
             isDatepickerVisible: "start",
             isTimePickerOpen: null,
             chartData: {
-                // labels: ["S", "M", "T", "W", "T", "F", "S"],
                 datasets: [
                     {
                         label: "Sleep Duration (hrs)",
@@ -233,6 +228,7 @@ export default {
     },
 
     methods: {
+        //function to save the information in the firebase database
         async submitSleepForm() {
             const startTime = new Date(
                 `${this.selectedModalDate} ${this.startSleep}`
@@ -242,11 +238,13 @@ export default {
             );
 
             if (endTime < startTime) {
-                endTime.setDate(endTime.getDate() + 1); // Handle overnight sleep
+                endTime.setDate(endTime.getDate() + 1);
             }
 
-            this.sleepDuration = (endTime - startTime) / 3600000; // Duration in hours
+            // calculate the sleep duration from the given time by the users
+            this.sleepDuration = (endTime - startTime) / 3600000;
 
+            // saves the data inputed in the "sleep" database (firebase)
             if (this.userId) {
                 const sleepDocRef = doc(
                     db,
@@ -291,14 +289,9 @@ export default {
         handleCancelSelection() {
             this.isTimePickerOpen = null;
         },
+
         getWeekStartEndDates(selectedDate) {
             const date = new Date(selectedDate);
-            if (isNaN(date)) {
-                console.error("Invalid date provided:", selectedDate);
-                throw new Error(
-                    "Invalid date value. Please provide a valid date."
-                );
-            }
 
             const dayOfWeek = date.getDay();
 
@@ -311,6 +304,7 @@ export default {
             return { startOfWeek, endOfWeek };
         },
 
+        //fetch from the databse to show/update the bar chart
         async fetchWeeklySleepData(selectedDate) {
             try {
                 selectedDate = selectedDate || new Date();
@@ -336,7 +330,6 @@ export default {
                         .substring(0, 10);
                     weekDates.push(formattedDate);
 
-                    // Fetch data from Firestore
                     const sleepDocRef = doc(
                         db,
                         "users",

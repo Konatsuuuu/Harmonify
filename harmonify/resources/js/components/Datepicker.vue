@@ -53,7 +53,6 @@
             <div v-for="day in weekdays" :key="day" class="py-1">{{ day }}</div>
         </div>
 
-        <!-- Dates Grid -->
         <div class="grid grid-cols-7 gap-1 p-1">
             <div
                 v-for="(date, index) in dates"
@@ -72,7 +71,6 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="flex justify-center items-center p-3">
             <button
                 @click="selectToday($event)"
@@ -193,6 +191,8 @@ export default {
         },
 
         updateCurrentMonthText() {
+            // https://www.w3schools.com/jsref/event_preventdefault.asp
+            event.preventDefault();
             this.currentMonth = new Date(
                 this.currentYear,
                 this.currentMonthIndex
