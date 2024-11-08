@@ -19,7 +19,7 @@
         </svg>
         <div
             v-if="showPopUp"
-            class="absolute right-5 mt-2 p-4 bg-white rounded-lg shadow-sm text-center"
+            class="absolute right-5 mt-2 p-4 bg-white rounded-lg shadow-sm text-center z-10"
         >
             <div class="text-xl text-[#50858B]">Logout?</div>
             <div class="mt-1 flex justify-center">
@@ -31,7 +31,7 @@
                 </button>
                 <button
                     @click="togglePopUp"
-                    class="m-1 px-4 py-2 bg-[#A1D2CE] text-[#50858B] rounded-lg"
+                    class="m-1 px-4 py-2 bg-[#A1D2CE] text-white rounded-lg"
                 >
                     Cancel
                 </button>
