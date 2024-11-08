@@ -18,3 +18,11 @@ Route::get('/calendar', function () {
     return view('calendar');
 });
 
+Route::get('/sleepGraph', function () {
+    return view('sleepGraph');
+});
+
+Route::get('/post', function () {
+    return view('post');
+});
+
