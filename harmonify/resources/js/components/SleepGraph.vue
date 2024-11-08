@@ -3,15 +3,24 @@
         class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden"
     >
         <div
-            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#50858B]"
+            class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#040505]"
         >
-            <div class="flex items-center mb-3 ml-4 space-x-3 text-[#50858B]">
+            <div class="flex items-center mb-3 ml-4 space-x-3 text-[#040505]">
                 <BackButton />
                 <p class="text-3xl font-bold">Sleep Graph</p>
             </div>
+            <div class="flex w-full h-[76vh]">
+                <div class="chart-container w-1/2">
+                    <Bar :data="chartData" :options="chartOptions" />
+                </div>
 
-            <div class="chart-container">
-                <Bar :data="chartData" :options="chartOptions" />
+                <div class="w-1/3">
+                    <button
+                        class="text-white bg-green-800 hover:bg-green-900 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-700 dark:hover:bg-green-800"
+                    >
+                        + Add Sleep Time
+                    </button>
+                </div>
             </div>
         </div>
     </div>
