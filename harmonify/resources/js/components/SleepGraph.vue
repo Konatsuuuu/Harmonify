@@ -15,15 +15,22 @@
                 </div>
 
                 <div class="w-1/3">
+                    <!-- Open modal when button is clicked -->
                     <button
+                        @click="openModal"
                         class="text-white bg-green-800 hover:bg-green-900 focus:outline-none font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-700 dark:hover:bg-green-800"
                     >
                         + Add Sleep Time
                     </button>
+
+                    <VueDatePicker v-model="date"></VueDatePicker>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Sleep Add Modal -->
+    <SleepAdd :showModal="showModal" :closeModal="closeModal" />
 </template>
 
 <script>
@@ -38,6 +45,7 @@ import {
     LinearScale,
 } from "chart.js";
 import BackButton from "./BackButton.vue";
+import SleepAdd from "./SleepGraphAdd.vue"; // Import the SleepAdd component
 
 // Registering chart.js components globally
 ChartJS.register(
@@ -53,24 +61,24 @@ export default {
     components: {
         BackButton,
         Bar,
+        SleepAdd, // Register the SleepAdd component
     },
 
     data() {
         return {
-            // Chart data for the week
+            showModal: false, // This will control the visibility of the modal
             chartData: {
-                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], // Labels for each day of the week
+                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], // Example week data
                 datasets: [
                     {
-                        label: "Sleep Duration (hrs)", // The label for the bar chart
-                        data: [6, 7, 5, 8, 6, 7, 9], // Example data for each day of the week (replace with your actual data)
+                        label: "Sleep Duration (hrs)", // Label for the chart
+                        data: [6, 7, 5, 8, 6, 7, 9], // Example data
                         backgroundColor: "396b4a", // Bar color
-                        borderColor: "#396b4a", // Border color (same as the fill color)
+                        borderColor: "#396b4a", // Border color
                         borderWidth: 1,
                     },
                 ],
             },
-            // Chart options
             chartOptions: {
                 responsive: true,
                 plugins: {
@@ -92,7 +100,6 @@ export default {
                             display: true,
                             text: "Days of the Week",
                         },
-
                         ticks: {
                             padding: 20,
                         },
@@ -102,27 +109,37 @@ export default {
                             display: true,
                             text: "Hours",
                         },
-                        // Customize y-axis range if needed
                         min: 0,
                         max: 12,
                     },
                 },
                 elements: {
-                    // Adjust the thickness of the bars to 10
                     bar: {
                         borderRadius: 5,
-                        barThickness: 5, // Thinner bars
+                        barThickness: 5,
                     },
                 },
             },
         };
+    },
+
+    methods: {
+        // Method to open the modal
+        openModal() {
+            this.showModal = true; // Show modal when button is clicked
+        },
+
+        // Method to close the modal
+        closeModal() {
+            this.showModal = false; // Close modal when user submits or closes it
+        },
     },
 };
 </script>
 
 <style scoped>
 .chart-container {
-    width: 100%; /* Set the width to a smaller percentage */
-    height: 400px; /* Set a smaller height for the graph */
+    width: 100%;
+    height: 400px;
 }
 </style>
