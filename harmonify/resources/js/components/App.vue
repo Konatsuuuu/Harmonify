@@ -1,13 +1,25 @@
 <template>
-    <div class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden">
+    <div
+        class="backgroundImg flex items-center justify-center min-h-screen bg-cover overflow-hidden"
+    >
         <div class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col">
             <div class="flex justify-between w-full">
                 <div class="text-[#b28666] mb-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:v="https://svgstorm.com" viewBox="0 0 1218 292"
-                        style="width: 200px; height: auto">
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#FEFEFE" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:v="https://svgstorm.com"
+                        viewBox="0 0 1218 292"
+                        style="width: 200px; height: auto"
+                    >
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#FEFEFE"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 0.00 292.00
 L 1218.00 292.00
 L 1218.00 0.00
@@ -54,11 +66,18 @@ C 970.15 95.12 978.26 75.80 994.25 63.25 C 1010.24 50.70 1034.84 52.18 1052.68 5
 C 1082.09 99.24 1096.76 98.39 1105.00 100.00 C 1113.24 101.61 1125.42 100.69 1130.25 107.75 C 1135.08 114.81 1120.73 120.14 1125.33 129.67 C 1129.93 139.20 1130.53 145.09 1133.98 155.02 C 1137.42 164.96 1143.06 168.87 1146.92 158.92 C 1150.78 148.98 1155.75 145.93 1158.75 137.75 C 1161.76 129.58 1171.23 122.44 1163.25 115.75 C 1155.27 109.06 1160.15 101.32 1170.22 100.22 C 1180.30 99.12 1189.02 97.08 1199.07 101.93 C 1209.13 106.78 1197.94 115.31 1189.93 116.93 C 1181.92 118.54 1178.58 128.53 1175.08 135.08 C 1171.57 141.62 1167.10 149.41 1163.25 156.25 C 1159.40 163.08 1156.07 171.06 1152.08 178.08 C 1148.08 185.10 1144.03 192.96 1140.08 200.08 C 1136.12 207.19 1132.76 214.61 1128.70 221.69 C 1124.63 228.78 1121.69 235.80 1116.23 242.23 C 1110.77 248.66 1104.89 253.64 1097.31 257.31 C 1089.72 260.97 1077.06 262.08 1068.33 260.67 C 1059.60 259.26 1052.33 255.90 1045.30 250.70 C 1038.28 245.50 1034.68 235.19 1037.33 227.33 C 1039.98 219.47 1046.65 214.04 1053.70 210.70 C 1060.74 207.35 1073.24 203.46 1080.08 209.92 C 1086.92 216.38 1085.04 224.26 1090.25 232.75 C 1095.47 241.23 1104.72 238.15 1109.25 230.25 C 1113.79 222.36 1116.47 212.73 1110.23 205.77 C 1103.99 198.81 1099.69 194.80 1096.23 186.77 C 1092.77 178.74 1089.41 170.31 1086.69 162.31 C 1083.97 154.30 1080.41 146.58 1076.70 139.31 C 1072.98 132.03 1066.93 126.62 1060.77 122.23 C 1054.61 117.84 1043.22 113.33 1048.75 104.75
 C 1032.14 103.38 1035.33 89.57 1037.00 77.00 C 1038.67 64.43 1018.38 58.91 1014.70 72.70 C 1011.01 86.48 1011.18 94.88 1016.92 108.08 C 1022.67 121.27 1043.00 108.72 1049.00 120.00
 M 929.00 55.00
-C 957.09 56.80 952.99 102.12 925.00 99.00 C 897.01 95.88 901.51 53.23 929.00 55.00 Z" data-index="0"
-                                style="opacity: 1"></path>
+C 957.09 56.80 952.99 102.12 925.00 99.00 C 897.01 95.88 901.51 53.23 929.00 55.00 Z"
+                                data-index="0"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#272727" stroke-opacity="1.00"
-                            stroke-width="0.3">
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#272727"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
                             <path
                                 d="
 M 76.00 201.00
@@ -84,10 +103,16 @@ C 105.40 130.43 108.36 106.83 110.02 94.02 C 111.69 81.22 129.54 64.66 113.02 56
 M 283.00 155.00
 C 283.76 159.03 283.47 163.09 283.00 167.00
 C 282.77 178.73 276.28 183.31 265.78 179.22 C 255.27 175.14 258.55 163.69 265.25 159.25 C 271.95 154.81 280.66 142.66 283.00 155.00 Z"
-                                data-index="1"></path>
+                                data-index="1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#282828" stroke-opacity="1.00"
-                            stroke-width="0.3">
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#282828"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
                             <path
                                 d="
 M 783.00 201.00
@@ -112,120 +137,247 @@ C 737.29 95.70 689.36 88.41 662.75 116.75 C 636.14 145.09 652.65 192.24 691.00 2
 C 762.52 138.25 764.67 146.21 765.67 153.33 C 766.67 160.45 765.87 172.96 762.92 178.92 C 759.98 184.89 750.72 191.23 758.92 196.08 C 767.13 200.92 773.84 201.00 783.00 201.00
 M 705.00 111.00
 C 711.93 111.91 712.35 124.34 714.33 130.67 C 716.30 137.01 716.23 150.78 716.00 159.00 C 715.77 167.22 713.59 175.32 710.69 183.69 C 707.80 192.07 699.52 191.63 696.70 183.30 C 693.87 174.98 691.70 166.37 692.00 158.00 C 692.30 149.63 691.38 135.77 693.33 129.33 C 695.28 122.89 697.01 109.95 705.00 111.00 Z"
-                                data-index="2" style="opacity: 1"></path>
+                                data-index="2"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#282828" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#282828"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 929.00 55.00
-C 901.51 53.23 897.01 95.88 925.00 99.00 C 952.99 102.12 957.09 56.80 929.00 55.00 Z" data-index="3"></path>
+C 901.51 53.23 897.01 95.88 925.00 99.00 C 952.99 102.12 957.09 56.80 929.00 55.00 Z"
+                                data-index="3"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#FBFBFB" stroke-opacity="1.00"
-                            stroke-width="0.3">
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#FBFBFB"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
                             <path
                                 d="
 M 705.00 111.00
 C 697.01 109.95 695.28 122.89 693.33 129.33 C 691.38 135.77 692.30 149.63 692.00 158.00 C 691.70 166.37 693.87 174.98 696.70 183.30 C 699.52 191.63 707.80 192.07 710.69 183.69 C 713.59 175.32 715.77 167.22 716.00 159.00 C 716.23 150.78 716.30 137.01 714.33 130.67 C 712.35 124.34 711.93 111.91 705.00 111.00 Z"
-                                data-index="4"></path>
+                                data-index="4"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#C9C9C9" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#C9C9C9"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 1049.00 130.00
 C 1049.00 130.50 1049.00 131.00 1049.00 131.00
 C 1051.36 128.73 1049.91 122.47 1049.00 120.00
-C 1049.66 123.00 1049.00 126.92 1049.00 130.00 Z" data-index="5" style="opacity: 1"></path>
+C 1049.66 123.00 1049.00 126.92 1049.00 130.00 Z"
+                                data-index="5"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#959595" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#959595"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 839.00 173.00
 C 839.00 157.87 840.05 141.36 838.00 127.00
-C 838.58 142.27 837.59 158.42 839.00 173.00 Z" data-index="6"></path>
+C 838.58 142.27 837.59 158.42 839.00 173.00 Z"
+                                data-index="6"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#8B8B8B" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#8B8B8B"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 589.00 174.00
 C 588.42 158.78 590.07 142.48 588.00 128.00
-C 588.58 143.22 586.93 159.52 589.00 174.00 Z" data-index="7"></path>
+C 588.58 143.22 586.93 159.52 589.00 174.00 Z"
+                                data-index="7"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#818181" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#818181"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 1022.00 131.00
 C 1030.94 130.40 1040.07 131.81 1049.00 131.00
 C 1049.00 131.00 1049.00 130.50 1049.00 130.00
-C 1045.02 129.64 1038.82 129.69 1035.00 130.00 C 1031.18 130.31 1024.49 128.36 1022.00 131.00 Z" data-index="8"
-                                style="opacity: 1"></path>
+C 1045.02 129.64 1038.82 129.69 1035.00 130.00 C 1031.18 130.31 1024.49 128.36 1022.00 131.00 Z"
+                                data-index="8"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#FAFBFA" stroke-opacity="1.00"
-                            stroke-width="0.3">
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#FAFBFA"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
                             <path
                                 d="
 M 283.00 167.00
 C 283.08 163.06 283.30 158.93 283.00 155.00
 C 280.66 142.66 271.95 154.81 265.25 159.25 C 258.55 163.69 255.27 175.14 265.78 179.22 C 276.28 183.31 282.77 178.73 283.00 167.00 Z"
-                                data-index="9"></path>
+                                data-index="9"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#969696" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#969696"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 283.00 167.00
 C 283.47 163.09 283.76 159.03 283.00 155.00
-C 283.30 158.93 283.08 163.06 283.00 167.00 Z" data-index="10"></path>
+C 283.30 158.93 283.08 163.06 283.00 167.00 Z"
+                                data-index="10"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#999999" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#999999"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 93.00 201.00
 C 87.33 201.00 81.67 201.00 76.00 201.00
-C 81.28 201.51 87.65 201.52 93.00 201.00 Z" data-index="11"></path>
+C 81.28 201.51 87.65 201.52 93.00 201.00 Z"
+                                data-index="11"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#9A9A9A" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#9A9A9A"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 191.00 201.00
 C 185.33 201.00 179.67 201.00 174.00 201.00
-C 179.28 201.51 185.65 201.52 191.00 201.00 Z" data-index="12"></path>
+C 179.28 201.51 185.65 201.52 191.00 201.00 Z"
+                                data-index="12"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#9A9A9A" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#9A9A9A"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 375.00 201.00
 C 371.00 201.00 367.00 201.00 363.00 201.00
-C 366.71 201.36 371.23 201.37 375.00 201.00 Z" data-index="13"></path>
+C 366.71 201.36 371.23 201.37 375.00 201.00 Z"
+                                data-index="13"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#999999" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#999999"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 489.00 201.00
 C 485.33 201.00 481.67 201.00 478.00 201.00
-C 481.39 201.33 485.54 201.33 489.00 201.00 Z" data-index="14"></path>
+C 481.39 201.33 485.54 201.33 489.00 201.00 Z"
+                                data-index="14"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#9A9A9A" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#9A9A9A"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 795.00 201.00
 C 791.00 201.00 787.00 201.00 783.00 201.00
-C 786.71 201.36 791.23 201.37 795.00 201.00 Z" data-index="15"></path>
+C 786.71 201.36 791.23 201.37 795.00 201.00 Z"
+                                data-index="15"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#999999" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#999999"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 936.00 201.00
 C 932.33 201.00 928.67 201.00 925.00 201.00
-C 928.39 201.33 932.54 201.33 936.00 201.00 Z" data-index="16"></path>
+C 928.39 201.33 932.54 201.33 936.00 201.00 Z"
+                                data-index="16"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="0.0" stroke="#9B9B9B" stroke-opacity="1.00"
-                            stroke-width="0.3">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="0.0"
+                            stroke="#9B9B9B"
+                            stroke-opacity="1.00"
+                            stroke-width="0.3"
+                        >
+                            <path
+                                d="
 M 1004.00 201.00
 C 1000.00 201.00 996.00 201.00 992.00 201.00
-C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z" data-index="17"></path>
+C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z"
+                                data-index="17"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None"></g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        ></g>
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
                             <path
                                 d="
 M 76.00 201.00
@@ -251,9 +403,15 @@ C 105.40 130.43 108.36 106.83 110.02 94.02 C 111.69 81.22 129.54 64.66 113.02 56
 M 283.00 155.00
 C 283.76 159.03 283.47 163.09 283.00 167.00
 C 282.77 178.73 276.28 183.31 265.78 179.22 C 255.27 175.14 258.55 163.69 265.25 159.25 C 271.95 154.81 280.66 142.66 283.00 155.00 Z"
-                                data-index="19" style="opacity: 1"></path>
+                                data-index="19"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
                             <path
                                 d="
 M 783.00 201.00
@@ -278,130 +436,250 @@ C 737.29 95.70 689.36 88.41 662.75 116.75 C 636.14 145.09 652.65 192.24 691.00 2
 C 762.52 138.25 764.67 146.21 765.67 153.33 C 766.67 160.45 765.87 172.96 762.92 178.92 C 759.98 184.89 750.72 191.23 758.92 196.08 C 767.13 200.92 773.84 201.00 783.00 201.00
 M 705.00 111.00
 C 711.93 111.91 712.35 124.34 714.33 130.67 C 716.30 137.01 716.23 150.78 716.00 159.00 C 715.77 167.22 713.59 175.32 710.69 183.69 C 707.80 192.07 699.52 191.63 696.70 183.30 C 693.87 174.98 691.70 166.37 692.00 158.00 C 692.30 149.63 691.38 135.77 693.33 129.33 C 695.28 122.89 697.01 109.95 705.00 111.00 Z"
-                                data-index="20" style="opacity: 1"></path>
+                                data-index="20"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 929.00 55.00
-C 901.51 53.23 897.01 95.88 925.00 99.00 C 952.99 102.12 957.09 56.80 929.00 55.00 Z" data-index="21"
-                                style="opacity: 1"></path>
+C 901.51 53.23 897.01 95.88 925.00 99.00 C 952.99 102.12 957.09 56.80 929.00 55.00 Z"
+                                data-index="21"
+                                style="opacity: 1"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None"></g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        ></g>
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 1049.00 130.00
 C 1049.00 130.50 1049.00 131.00 1049.00 131.00
 C 1051.36 128.73 1049.91 122.47 1049.00 120.00
-C 1049.66 123.00 1049.00 126.92 1049.00 130.00 Z" data-index="23" style="opacity: 1; visibility: visible"></path>
+C 1049.66 123.00 1049.00 126.92 1049.00 130.00 Z"
+                                data-index="23"
+                                style="opacity: 1; visibility: visible"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 839.00 173.00
 C 839.00 157.87 840.05 141.36 838.00 127.00
-C 838.58 142.27 837.59 158.42 839.00 173.00 Z" data-index="24"></path>
+C 838.58 142.27 837.59 158.42 839.00 173.00 Z"
+                                data-index="24"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 589.00 174.00
 C 588.42 158.78 590.07 142.48 588.00 128.00
-C 588.58 143.22 586.93 159.52 589.00 174.00 Z" data-index="25"></path>
+C 588.58 143.22 586.93 159.52 589.00 174.00 Z"
+                                data-index="25"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 1022.00 131.00
 C 1030.94 130.40 1040.07 131.81 1049.00 131.00
 C 1049.00 131.00 1049.00 130.50 1049.00 130.00
-C 1045.02 129.64 1038.82 129.69 1035.00 130.00 C 1031.18 130.31 1024.49 128.36 1022.00 131.00 Z" data-index="26"
-                                style="opacity: 1; visibility: visible"></path>
+C 1045.02 129.64 1038.82 129.69 1035.00 130.00 C 1031.18 130.31 1024.49 128.36 1022.00 131.00 Z"
+                                data-index="26"
+                                style="opacity: 1; visibility: visible"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None"></g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        ></g>
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 283.00 167.00
 C 283.47 163.09 283.76 159.03 283.00 155.00
-C 283.30 158.93 283.08 163.06 283.00 167.00 Z" data-index="28"></path>
+C 283.30 158.93 283.08 163.06 283.00 167.00 Z"
+                                data-index="28"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 93.00 201.00
 C 87.33 201.00 81.67 201.00 76.00 201.00
-C 81.28 201.51 87.65 201.52 93.00 201.00 Z" data-index="29"></path>
+C 81.28 201.51 87.65 201.52 93.00 201.00 Z"
+                                data-index="29"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 191.00 201.00
 C 185.33 201.00 179.67 201.00 174.00 201.00
-C 179.28 201.51 185.65 201.52 191.00 201.00 Z" data-index="30"></path>
+C 179.28 201.51 185.65 201.52 191.00 201.00 Z"
+                                data-index="30"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 375.00 201.00
 C 371.00 201.00 367.00 201.00 363.00 201.00
-C 366.71 201.36 371.23 201.37 375.00 201.00 Z" data-index="31"></path>
+C 366.71 201.36 371.23 201.37 375.00 201.00 Z"
+                                data-index="31"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 489.00 201.00
 C 485.33 201.00 481.67 201.00 478.00 201.00
-C 481.39 201.33 485.54 201.33 489.00 201.00 Z" data-index="32"></path>
+C 481.39 201.33 485.54 201.33 489.00 201.00 Z"
+                                data-index="32"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 795.00 201.00
 C 791.00 201.00 787.00 201.00 783.00 201.00
-C 786.71 201.36 791.23 201.37 795.00 201.00 Z" data-index="33"></path>
+C 786.71 201.36 791.23 201.37 795.00 201.00 Z"
+                                data-index="33"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 936.00 201.00
 C 932.33 201.00 928.67 201.00 925.00 201.00
-C 928.39 201.33 932.54 201.33 936.00 201.00 Z" data-index="34"></path>
+C 928.39 201.33 932.54 201.33 936.00 201.00 Z"
+                                data-index="34"
+                            ></path>
                         </g>
-                        <g fill="currentColor" fill-opacity="1.00" stroke="None">
-                            <path d="
+                        <g
+                            fill="currentColor"
+                            fill-opacity="1.00"
+                            stroke="None"
+                        >
+                            <path
+                                d="
 M 1004.00 201.00
 C 1000.00 201.00 996.00 201.00 992.00 201.00
-C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z" data-index="35"></path>
+C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z"
+                                data-index="35"
+                            ></path>
                         </g>
                     </svg>
                 </div>
 
                 <div class="flex space-x-4 text-[#b28666]">
-                    <svg class="w-8 h-8 cursor-pointer" viewBox="0 0 24 24" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        class="w-8 h-8 cursor-pointer"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path
                             d="M12.5 2V5.25154C12.5 5.66576 12.8358 6.00154 13.25 6.00154C13.6642 6.00154 14 5.66576 14 5.25154V2H15V6.25112C15 6.66534 15.3358 7.00112 15.75 7.00112C16.1642 7.00112 16.5 6.66534 16.5 6.25112V2H18.2502C18.6645 2 19.0002 2.33579 19.0002 2.75V11H5.00024V2.75C5.00024 2.33579 5.33603 2 5.75024 2H12.5Z"
-                            fill="currentColor" />
+                            fill="currentColor"
+                        />
                         <path
                             d="M5.00024 12.5V14.2521C5.00024 15.4947 6.0076 16.5021 7.25024 16.5021H9.99991V20C9.99991 21.1046 10.8953 22 11.9999 22C13.1045 22 13.9999 21.1046 13.9999 20V16.5021H16.7502C17.9929 16.5021 19.0002 15.4947 19.0002 14.2521V12.5H5.00024Z"
-                            fill="currentColor" />
+                            fill="currentColor"
+                        />
                     </svg>
-                    <svg class="w-8 h-8 cursor-pointer" viewBox="0 0 24 24" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        class="w-8 h-8 cursor-pointer"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path
                             d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"
-                            fill="currentColor" />
+                            fill="currentColor"
+                        />
                     </svg>
                     <Logout />
                 </div>
             </div>
             <div class="flex w-full h-[76vh]">
-                <div class="w-1/2 bg-white/30 mr-5 rounded-xl flex flex-col h-full">
+                <div
+                    class="w-1/2 bg-white/30 mr-5 rounded-xl flex flex-col h-full"
+                >
                     <p class="text-2xl font-bold m-3 ml-6 text-[#b28666]">
                         Calendar
                     </p>
                     <div
-                        class="flex flex-col h-full w-full rounded-lg overflow-hidden font-bold text-1xl text-[#b28666]">
+                        class="flex flex-col h-full w-full rounded-lg overflow-hidden font-bold text-1xl text-[#b28666]"
+                    >
                         <DashboardCalendar />
                     </div>
                 </div>
 
                 <div class="w-1/4 rounded-xl flex flex-col">
-                    <div class="relative h-1/2 bg-white/30 mr-5 mb-5 rounded-xl">
+                    <div
+                        class="relative h-1/2 bg-white/30 mr-5 mb-5 rounded-xl"
+                    >
                         <p class="text-2xl font-bold m-3 ml-6 text-[#b28666]">
                             Posts
                         </p>
-                        <div class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4">
+                        <div
+                            class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4"
+                        >
                             <ExpandPosts />
                         </div>
                     </div>
@@ -409,7 +687,9 @@ C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z" data-index="35"></path>
                         <p class="text-2xl font-bold m-3 ml-6 text-[#b28666]">
                             Sleep Graph
                         </p>
-                        <div class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4">
+                        <div
+                            class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4"
+                        >
                             <ExpandSleepGraph />
                         </div>
                     </div>
