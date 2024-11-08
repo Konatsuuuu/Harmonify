@@ -5,29 +5,29 @@
         <div
             class="glassmorphism w-[93%] h-[88vh] p-5 flex flex-col text-[#b28666]"
         >
-            <div class="flex items-center mb-3 ml-4 space-x-3 text-[#b28666]">
+            <div class="flex items-center mb-1 ml-4 space-x-3 text-[#b28666]">
                 <BackButton />
                 <p class="text-3xl font-bold">Sleep Graph</p>
             </div>
-            <div class="flex w-full h-[76vh]">
+            <div class="flex w-full h-full">
                 <div class="chart-container">
                     <Bar
                         ref="chart"
                         :data="chartData"
                         :options="chartOptions"
-                        class="w-30% h-12 pl-10 pt-5"
+                        class="w-30% h-full pr-20 pt-2"
                     />
                 </div>
 
                 <div class="w-1/2">
                     <button
                         @click="showModal = true"
-                        class="text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]"
+                        class="w-[85%] text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]"
                     >
                         + Add Sleep Time
                     </button>
 
-                    <div class="py-5 ml-10">
+                    <div class="py-5">
                         <label for="date" class="block text-sm font-medium">
                             Select Date
                         </label>
@@ -39,6 +39,11 @@
                             @date-selected="setDateOutside"
                             class="mt-2"
                         />
+
+                        <!-- <p class="text-[#b28666] align-bottom">
+                            By selecteing a date, you will be able to see the
+                            weekly sleep data of the selected date
+                        </p> -->
                     </div>
                 </div>
             </div>
@@ -303,9 +308,6 @@ export default {
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-            console.log("Raw Start of the Week:", startOfWeek);
-            console.log("Raw End of the Week:", endOfWeek);
-
             return { startOfWeek, endOfWeek };
         },
 
@@ -417,6 +419,6 @@ export default {
 <style scoped>
 .chart-container {
     width: 100%;
-    height: 70%;
+    height: 80%;
 }
 </style>
