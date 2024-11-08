@@ -202,6 +202,11 @@
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
                             Posts
                         </p>
+                        <div
+                            class="flex-1 flex items-end justify-end mr-4 ml-2 mb-4"
+                        >
+                            <ExpandPosts />
+                        </div>
                     </div>
                     <div class="h-1/2 bg-white/30 mr-5 rounded-xl">
                         <p class="text-2xl font-bold m-3 ml-6 text-[#50858B]">
@@ -236,12 +241,14 @@
 import ExpandCalendar from "./ExpandCalendar.vue";
 import Logout from "./Logout.vue";
 import ExpandSleepGraph from "./ExpandSleepGraph.vue";
+import ExpandPosts from "./ExpandPosts.vue";
 
 export default {
     components: {
         Logout,
         ExpandCalendar,
         ExpandSleepGraph,
+        ExpandPosts,
     },
 };
 </script>

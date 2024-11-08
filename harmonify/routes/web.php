@@ -22,7 +22,7 @@ Route::get('/sleepGraph', function () {
     return view('sleepGraph');
 });
 
-Route::get('/post', function () {
-    return view('post');
+Route::get('/posts', function () {
+    return view('posts');
 });
 
