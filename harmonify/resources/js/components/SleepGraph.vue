@@ -39,6 +39,12 @@
                             class="mt-2"
                         />
                     </div>
+                    <button
+                        @click="updateChart"
+                        class="mt-[85%] text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-xl rounded-full px-10 py-2.5 text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]"
+                    >
+                        Update
+                    </button>
                 </div>
             </div>
         </div>
@@ -149,7 +155,6 @@ import { db, auth, setDoc, collection, getDocs, doc } from "@/firebaseConfig"; /
 import { onAuthStateChanged } from "firebase/auth"; // Firebase auth listener
 import Timepicker from "./Timepicker.vue"; // Timepicker component
 import Datepicker from "./Datepicker.vue"; // Datepicker component
-import { ref } from "vue";
 import { Bar } from "vue-chartjs"; // Chart.js component
 import {
     Chart as ChartJS,
@@ -161,7 +166,6 @@ import {
     LinearScale,
 } from "chart.js"; // Chart.js setup
 import BackButton from "./BackButton.vue"; // BackButton component
-import { VueElement } from "vue";
 
 // Registering chart.js components globally
 ChartJS.register(
@@ -184,14 +188,14 @@ export default {
     data() {
         return {
             showModal: false,
-            isDatepickerVisible: "start", // This controls the visibility of the date picker
+            isDatepickerVisible: "start",
             isTimePickerOpen: null,
             chartData: {
                 labels: ["S", "M", "T", "W", "T", "F", "S"], // Placeholder for day labels
                 datasets: [
                     {
                         label: "Sleep Duration (hrs)",
-                        data: [6, 7, 5, 8, 6, 7, 9], // Placeholder data for sleep durations
+                        data: [0, 0, 0, 0, 0, 0, 0], // Placeholder data for sleep durations
                         backgroundColor: "#b28666",
                         borderColor: "#b28666",
                         borderWidth: 0,
@@ -248,57 +252,21 @@ export default {
                     userId: this.userId,
                 });
 
-                this.showModal = false; // Close the modal
-                this.fetchSleepData(); // Refresh the chart with updated data
+                this.showModal = false;
+                this.updateChart(); // Refresh the chart after adding new sleep data
             }
         },
 
-        async fetchSleepData() {
-            if (!this.userId) {
-                console.error("User ID not available");
-                return;
-            }
-            try {
-                const userDocRef = collection(
-                    db,
-                    "users",
-                    this.userId,
-                    "sleep"
-                );
-                const sleepSnapshot = await getDocs(userDocRef);
-                const sleepData = sleepSnapshot.docs.map((doc) => doc.data());
+        // updateChart() {
+        //     this.fetchSleepData(); // Refresh data when "Update" button is clicked
+        // },
 
-                const weekData = ["S", "M", "T", "W", "T", "F", "S"];
-                const sleepDurations = weekData.map((day) => {
-                    const dayData = sleepData.find(
-                        (sleep) => sleep.date === day
-                    );
-                    return dayData ? dayData.sleepDuration : 0;
-                });
-
-                this.chartData.datasets[0].data = sleepDurations;
-            } catch (error) {
-                console.error("Error fetching sleep data:", error);
-            }
-        },
-
-        setDateOutside(date) {
-            this.selectedOutsideDate = date; // Update the outside Datepicker date
-            this.updateChartData();
-        },
+        // setDateOutside(date) {
+        //     this.selectedOutsideDate = date; // Update the outside Datepicker date
+        // },
 
         setDateModal(date) {
             this.selectedModalDate = date; // Update the modal Datepicker date
-            this.updateChartData();
-        },
-
-        updateChartData() {
-            // This method updates the chart immediately after the date is selected
-            console.log(
-                "Updated selected date:",
-                this.selectedModalDate || this.selectedOutsideDate
-            );
-            // Optionally, you can fetch or process new data for the chart based on the selected date
         },
 
         showTimePicker(type) {
@@ -318,13 +286,120 @@ export default {
         handleCancelSelection() {
             this.isTimePickerOpen = null;
         },
+        getWeekStartEndDates(selectedDate) {
+            const date = new Date(selectedDate); // Create a Date object from the selected date
+
+            // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+            const dayOfWeek = date.getDay();
+
+            // Calculate the start of the week (Sunday)
+            const startOfWeek = new Date(date);
+            startOfWeek.setDate(date.getDate() - dayOfWeek); // Adjust to Sunday of the selected week
+
+            // Calculate the end of the week (Saturday)
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday of the same week
+
+            console.log(
+                "Start of the Week:",
+                startOfWeek.toISOString().split("T")[0]
+            );
+            console.log(
+                "End of the Week:",
+                endOfWeek.toISOString().split("T")[0]
+            );
+
+            return { startOfWeek, endOfWeek };
+        },
+
+        // Method to fetch the sleep durations for the entire week
+        async fetchWeeklySleepData(selectedDate) {
+            // Get the start and end dates of the week (Sunday to Saturday)
+            const { startOfWeek, endOfWeek } =
+                this.getWeekStartEndDates(selectedDate);
+
+            try {
+                if (!this.userId) {
+                    console.error("User ID not available");
+                    return;
+                }
+
+                const sleepDurations = [];
+                const weekDates = [];
+
+                // Loop through each day of the week (from Sunday to Saturday)
+                let currentDay = new Date(startOfWeek);
+                while (currentDay <= endOfWeek) {
+                    // Format the current day as YYYY-MM-DD
+                    const formattedDate = currentDay
+                        .toISOString()
+                        .split("T")[0];
+                    weekDates.push(formattedDate);
+
+                    // Fetch the sleep data for the current day from Firestore
+                    const sleepDocRef = doc(
+                        db,
+                        "users",
+                        this.userId,
+                        "sleep",
+                        formattedDate
+                    );
+                    const docSnap = await getDoc(sleepDocRef);
+
+                    if (docSnap.exists()) {
+                        const sleepData = docSnap.data();
+                        console.log(
+                            `Fetched data for ${formattedDate}: Sleep Duration = ${sleepData.sleepDuration} hrs`
+                        );
+                        // Add the sleep duration to the array
+                        sleepDurations.push(sleepData.sleepDuration);
+                    } else {
+                        console.log(
+                            `No data found for ${formattedDate}: Sleep Duration = 0 hrs`
+                        );
+                        sleepDurations.push(0); // No data for this day, set sleep duration to 0
+                    }
+
+                    // Move to the next day
+                    currentDay.setDate(currentDay.getDate() + 1);
+                }
+
+                // After fetching all the data, log the sleep durations for the whole week
+                console.log("Sleep Durations for the Week:", sleepDurations);
+
+                // Update the chart data or do anything else with the results
+                this.updateChartData(sleepDurations, weekDates);
+            } catch (error) {
+                console.error("Error fetching sleep data:", error);
+            }
+        },
+
+        // Method to update the chart data
+        updateChartData(sleepDurations, weekDates) {
+            this.chartData.labels = weekDates; // Set the week dates on the x-axis
+            this.chartData.datasets[0].data = sleepDurations; // Set the sleep durations on the y-axis
+
+            // Update the chart
+            this.$refs.chart.update();
+        },
+
+        // Called when a date is selected outside the modal
+        setDateOutside(date) {
+            this.selectedOutsideDate = date; // Update the selected date outside the modal
+            console.log(
+                "Selected Date (outside modal):",
+                this.selectedOutsideDate
+            ); // Log the selected date
+            this.fetchWeeklySleepData(this.selectedOutsideDate); // Fetch sleep data for the entire week
+        },
     },
 
     mounted() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.userId = user.uid;
-                this.fetchSleepData();
+                console.log("User ID:", this.userId);
+                this.fetchWeeklySleepData();
             } else {
                 console.warn("No user is signed in.");
             }
