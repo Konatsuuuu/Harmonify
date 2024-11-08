@@ -55,8 +55,8 @@ export default {
                     {
                         label: "Sleep Duration (hrs)", // The label for the bar chart
                         data: [6, 7, 5, 8, 6, 7, 9], // Example data for each day of the week (replace with your actual data)
-                        backgroundColor: "#90e0ef", // Bar color
-                        borderColor: "#90e0ef", // Border color (same as the fill color)
+                        backgroundColor: "396b4a", // Bar color
+                        borderColor: "#396b4a", // Border color (same as the fill color)
                         borderWidth: 1,
                     },
                 ],
@@ -83,9 +83,9 @@ export default {
                             display: true,
                             text: "Days of the Week",
                         },
-                        // Spacing between bars (thinner bars)
+
                         ticks: {
-                            padding: 10,
+                            padding: 20,
                         },
                     },
                     y: {
@@ -102,7 +102,7 @@ export default {
                     // Adjust the thickness of the bars to 10
                     bar: {
                         borderRadius: 5,
-                        barThickness: 10, // Thinner bars
+                        barThickness: 5, // Thinner bars
                     },
                 },
             },
@@ -112,9 +112,8 @@ export default {
 </script>
 
 <style scoped>
-/* Optional: Style the chart container to make it smaller */
 .chart-container {
-    width: 80%; /* Set the width to a smaller percentage */
-    height: 300px; /* Set a smaller height for the graph */
+    width: 100%; /* Set the width to a smaller percentage */
+    height: 400px; /* Set a smaller height for the graph */
 }
 </style>

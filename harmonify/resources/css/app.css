@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .backgroundImg {
-    background-image: url("/Users/harleenkaur/Desktop/CIS3308/Harmonify/Harmonify/harmonify/resources/css/bg.jpg");
+    background-image: url("bg.jpg");
     /* background-image: linear-gradient(to bottom right, #dae9d9, #aac156);
     background-size: cover; */
     background-position: center;
@@ -23,7 +23,7 @@
     border-radius: 20px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    color: #1f1f1f;
+    color: #2b5338;
     cursor: pointer;
     font-family: "Roboto", arial, sans-serif;
     font-size: 14px;
