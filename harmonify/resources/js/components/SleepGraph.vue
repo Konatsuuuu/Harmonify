@@ -37,7 +37,7 @@
                             :selected-date="selectedOutsideDate"
                             v-model="selectedOutsideDate"
                             @date-selected="setDateOutside"
-                            class="mt-1 justify-center"
+                            class="mt-1 right-0"
                         />
                     </div>
                 </div>
