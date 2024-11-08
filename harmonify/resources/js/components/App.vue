@@ -223,14 +223,9 @@
                 </div>
 
                 <div class="w-1/4 rounded-xl flex flex-col">
-                    <div class="h-1/2 bg-white/30 mr-5 mb-5 rounded-xl">
+                    <div class="h-full bg-white/30 mr-5 rounded-xl">
                         <p class="text-2xl font-bold m-3 ml-6 text-[#282e2f]">
                             Goals
-                        </p>
-                    </div>
-                    <div class="h-1/2 bg-white/30 mr-5 rounded-xl">
-                        <p class="text-2xl font-bold m-3 ml-6 text-[#282e2f]">
-                            Advice
                         </p>
                     </div>
                 </div>
