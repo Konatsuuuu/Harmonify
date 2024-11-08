@@ -10,11 +10,8 @@
                 <p class="text-3xl font-bold">Sleep Graph</p>
             </div>
 
-            <div>
-                <!-- Chart component with thinner bars and smaller graph size -->
-                <div class="chart-container">
-                    <Bar :data="chartData" :options="chartOptions" />
-                </div>
+            <div class="chart-container">
+                <Bar :data="chartData" :options="chartOptions" />
             </div>
         </div>
     </div>
