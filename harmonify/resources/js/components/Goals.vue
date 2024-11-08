@@ -168,4 +168,28 @@ export default {
 .v-progress-circular {
     margin: 2rem;
 }
+
+.scrollToDo input[type="checkbox"] {
+    appearance: none; /* Remove default checkbox styling */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d0b29f; /* Milktea-like border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Change outline color when the checkbox is focused */
+.scrollToDo input[type="checkbox"]:focus {
+    outline: 2px solid #b28666; /* Darker milktea-like outline on focus */
+    box-shadow: 0 0 5px rgba(178, 134, 102, 0.3); /* Soft glow effect */
+}
+
+/* Add checkmark when checked */
+.scrollToDo input[type="checkbox"]:checked {
+    background-color: #d0b29f; /* Milktea background */
+    border-color: #d0b29f; /* Border color same as background */
+    position: relative;
+}
 </style>
