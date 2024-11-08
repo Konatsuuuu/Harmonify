@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .backgroundImg {
-    /*background-image: url("https://i.pinimg.com/1200x/0b/c8/48/0bc8484b3c326d5630f338c04c58cf14.jpg");*/
-    background-image: linear-gradient(to bottom right, #dae9d9, #aac156);
-    background-size: cover;
+    background-image: url("/Users/harleenkaur/Desktop/CIS3308/Harmonify/Harmonify/harmonify/resources/css/bg.jpg");
+    /* background-image: linear-gradient(to bottom right, #dae9d9, #aac156);
+    background-size: cover; */
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -119,7 +119,7 @@
 }
 
 .glassmorphism {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.337);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(17px);
     -webkit-backdrop-filter: blur(17px);
