@@ -265,7 +265,6 @@ export default {
                 anime({
                     targets: element,
                     scale: [1.2, 1],
-                    // translateY: [-30, 0],
                     easing: "easeOutElastic(1, .4)",
                     duration: 2000,
                 });
