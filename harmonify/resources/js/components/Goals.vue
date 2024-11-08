@@ -129,6 +129,21 @@ export default {
     padding: 1rem;
 }
 
+.fixedBottom input {
+    background-color: white;
+    border: 1px solid #d0b29f; /* Milktea-like color for border */
+    outline: 2px solid #d0b29f; /* Milktea-like outline when focused */
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem; /* Rounded corners */
+    transition: outline 0.2s ease, border-color 0.2s ease; /* Smooth transition */
+}
+
+.fixedBottom input:focus {
+    outline: 2px solid #b28666; /* Darker shade for the outline when focused */
+    border-color: #b28666; /* Darker border on focus */
+    box-shadow: 0 0 5px rgba(178, 134, 102, 0.3); /* Optional: Adding a soft shadow for focus effect */
+}
+
 .fixedBottom {
     position: absolute;
     bottom: 1.2rem;
