@@ -2,7 +2,7 @@
     <div
         v-if="showModal"
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-80"
-        @click="closeModal"
+        @click.self="closeModal"
     >
         <div class="bg-white p-6 rounded-lg w-96">
             <h2 class="text-xl font-semibold mb-4">Sleep Time</h2>
