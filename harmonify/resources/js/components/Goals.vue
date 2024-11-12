@@ -1,14 +1,22 @@
 <template>
-    <div class="flex justify-center">
-        <v-progress-circular
-            :model-value="value"
-            :size="200"
-            :width="30"
-            color="teal"
-            @click="onClick"
-        >
+    <div class="flex flex-col items-center mt-4">
+        <v-progress-circular :model-value="value" :size="200" :width="30" color="teal" class="relative"
+            style="top: -40px">
             <template v-slot:default> {{ value }} % </template>
         </v-progress-circular>
+
+        <p class="text-4 font-bold text-[#282e2f] relative underline" style="top: -40px">
+            To-Do-List
+        </p>
+        <ul>
+            <li v-for="(task, index) in toDo" :key="index" class="relative mx-5" style="top: -40px">
+                <input type="checkbox" v-model="task.completed" @change="updateProgress"
+                    class="text-4 font-bold text-[#282e2f] mx-2 mt-5 relative" />
+                <span :class="{ completed: task.completed }">{{
+                    task.name
+                }}</span>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -16,23 +24,39 @@
 export default {
     data() {
         return {
+            toDo: [
+                { name: "Task 1", completed: false },
+                { name: "Task 2", completed: false, },
+                { name: "Task 3", completed: false, },
+            ],
             value: 0,
         };
     },
-    methods: {
-        onClick(event) {
-            const rect = event.target.getBoundingClientRect();
-            const x = event.clientX - rect.left - rect.width / 2;
-            const y = event.clientY - rect.top - rect.height / 2;
 
-            const angle = (Math.atan2(y, x) * (180 / Math.PI) + 90 + 360) % 360;
-            this.value = Math.round((angle / 360) * 100);
+    methods: {
+        updateProgress() {
+            const completedTasks = this.addCount();
+            this.value = ((completedTasks / this.toDo.length) * 100).toFixed(1);
+        },
+        addCount() {
+            let count = 0;
+            for (const task of this.toDo) {
+                if (task.completed) {
+                    count++;
+                }
+            }
+            return count;
         },
     },
 };
 </script>
 
 <style scoped>
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
 .v-progress-circular {
     margin: 2rem;
 }
