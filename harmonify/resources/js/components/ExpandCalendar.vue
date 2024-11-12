@@ -6,7 +6,7 @@
             fill="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            class="mr-4 justify-self-end text-[#38686e] w-8 h-8 cursor-pointer"
+            class="mr-4 justify-self-end text-[#b28666] w-8 h-8 cursor-pointer"
         >
             <path
                 d="M3,20V12a1,1,0,0,1,2,0v5.585L17.586,5H12a1,1,0,0,1,0-2h8a1,1,0,0,1,1,1v8a1,1,0,0,1-2,0V6.414L6.414,19H12a1,1,0,0,1,0,2H4A1,1,0,0,1,3,20Z"
