@@ -390,7 +390,8 @@ C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z" data-index="35"></path>
                     <p class="text-2xl font-bold m-3 ml-6 text-[#b28666]">
                         Calendar
                     </p>
-                    <div class="flex flex-col h-full w-full rounded-lg overflow-hidden text-1xl text-[#b28666]">
+                    <div
+                        class="flex flex-col h-full w-full rounded-lg overflow-hidden font-bold text-1xl text-[#b28666]">
                         <DashboardCalendar />
                     </div>
                 </div>

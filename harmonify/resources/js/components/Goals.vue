@@ -1,35 +1,17 @@
 <template>
     <div class="flex flex-col items-center mt-4">
-        <v-progress-circular
-            :model-value="value"
-            :size="200"
-            :width="30"
-            color="#b28666"
-            class="relative"
-            style="top: -40px"
-        >
-            <template v-slot:default> {{ value }} % </template>
+        <v-progress-circular :model-value="value" :size="200" :width="30" color="#b28666" class="relative"
+            style="top: -40px">
+            <template v-slot:default> <span class="font-bold">{{ value }} % </span></template>
         </v-progress-circular>
 
-        <p
-            class="text-4 font-bold text-[#b28666] relative underline"
-            style="top: -40px"
-        >
+        <p class="text-4 font-bold text-[#b28666] relative underline" style="top: -40px">
             To-Do-List
         </p>
         <ul>
-            <li
-                v-for="(task, index) in toDo"
-                :key="index"
-                class="relative mx-5 mt-3"
-                style="top: -40px"
-            >
-                <input
-                    type="checkbox"
-                    v-model="task.completed"
-                    @change="updateProgress"
-                    class="text-4 font-bold text-[#b28666] mx-2 relative"
-                />
+            <li v-for="(task, index) in toDo" :key="index" class="relative mx-5 mt-3" style="top: -40px">
+                <input type="checkbox" v-model="task.completed" @change="updateProgress"
+                    class="text-4 font-bold text-[#b28666] mx-2 relative" />
                 <span :class="{ completed: task.completed }">{{
                     task.name
                 }}</span>
