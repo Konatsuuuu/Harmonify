@@ -19,7 +19,7 @@
                 </li>
             </ul>
         </div>
-        <div class="fixedBottom w-full flex items-center justify-center mt-4">
+        <div class="fixedBottom w-1/4 flex items-center justify-center mt-4">
             <button @click="addTask"
                 class="bg-[#b28666] text-4 text-white font-bold py-2 px-4 m-2 rounded-3xl hover:bg-[#8c6950]">+</button>
             <input v-model="newTask" placeholder="Add a New Task" class="bg-white border px-3 py-2 mr-2 rounded">
@@ -87,7 +87,7 @@ export default {
     align-items: center;
     position: relative;
     bottom: 1rem;
-    z-index: 10;
+    z-index: 9;
     padding: 1rem;
 }
 
@@ -95,7 +95,7 @@ export default {
     position: absolute;
     bottom: 1.2rem;
     padding: 1rem;
-    z-index: 10;
+    z-index: 9;
     margin-top: 0;
 }
 
