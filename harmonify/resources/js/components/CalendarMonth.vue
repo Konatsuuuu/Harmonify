@@ -84,12 +84,19 @@
                     <div
                         v-for="emotion in emotions"
                         :key="emotion.name"
-                        class="w-20 h-20 rounded-full flex-col items-center justify-center cursor-pointer"
-                        @click="recordEmotion(emotion)"
+                        class="w-20 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer"
+                        @click="animatePopupEmotion(emotion, $event)"
+                        :class="{
+                            'font-bold':
+                                selectedEmotion &&
+                                selectedEmotion.name === emotion.name,
+                        }"
                     >
                         <img
                             :src="emotion.icon"
-                            class="w-full h-full rounded-full"
+                            :alt="emotion.name"
+                            :ref="'emotion-' + emotion.name"
+                            class="popup-emotion w-full h-full rounded-full"
                         />
                         <div>{{ emotion.name }}</div>
                     </div>
@@ -97,8 +104,13 @@
                 <textarea
                     v-model="diary"
                     class="mt-10 w-full p-2 border rounded"
+                ></textarea>
+                <button
+                    @click="saveSelectedEmotion"
+                    class="mt-4 mr-4 px-4 py-2 bg-[#b28666] text-white rounded"
                 >
-                </textarea>
+                    Save
+                </button>
                 <button @click="closePopup" class="mt-4 text-[#b28666]">
                     Close
                 </button>
@@ -118,6 +130,7 @@ import {
     doc,
 } from "@/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import anime from "animejs";
 
 export default {
     data() {
@@ -129,6 +142,7 @@ export default {
             daysInMonth: [],
             showPopup: false,
             selectedDayIndex: null,
+            selectedEmotion: null,
             emotions: [
                 { name: "Happy", icon: "/svg/happy_bubble.svg" },
                 { name: "Calm", icon: "/svg/calm_bubble.svg" },
@@ -244,33 +258,28 @@ export default {
                 console.error("Error fetching diary:", error);
             }
         },
-        async fetchDiary(day) {
-            if (!this.userId) {
-                console.error("User ID not available");
-                return;
+        animatePopupEmotion(emotion) {
+            this.selectedEmotion = emotion;
+            const element = this.$refs["emotion-" + emotion.name];
+            if (element) {
+                anime({
+                    targets: element,
+                    translateY: [-30, 0],
+                    easing: "easeOutElastic(1, .4)",
+                    duration: 2000,
+                });
             }
-            try {
-                const dateId = `${this.currentYear}-${this.currentMonth + 1}-${
-                    day.date
-                }`;
-                const userDocRef = doc(
-                    db,
-                    "users",
-                    this.userId,
-                    "emotions",
-                    dateId
-                );
-                const docSnap = await getDoc(userDocRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    this.diary = data.diary || "";
-                } else {
-                    this.diary = "";
+        },
+        saveSelectedEmotion() {
+            if (this.selectedDayIndex !== null) {
+                const day = this.daysInMonth[this.selectedDayIndex];
+                if (day) {
+                    day.emotion = this.selectedEmotion;
+                    day.diary = this.diary;
+                    this.saveEmotionData(day, this.selectedEmotion, this.diary);
                 }
-            } catch (error) {
-                console.error("Error fetching diary:", error);
             }
+            this.closePopup();
         },
         recordEmotion(emotion) {
             if (
@@ -341,6 +350,14 @@ export default {
             );
             if (dayIndex !== -1) {
                 this.selectedDayIndex = dayIndex;
+                if (day.emotion) {
+                    this.selectedEmotion = this.emotions.find(
+                        (emotion) => emotion.name === day.emotion.name
+                    );
+                } else {
+                    this.selectedEmotion = null;
+                }
+
                 await this.fetchDiary(day);
                 this.showPopup = true;
             }
