@@ -115,22 +115,23 @@ export default {
 </script>
 
 <style scoped>
-.fixedChart {
+.fixedChart,
+.fixedBottom {
     display: flex;
-    flex-direction: column;
     align-items: center;
     position: relative;
-    bottom: 1rem;
-    z-index: 9;
     padding: 1rem;
+    z-index: 9;
 }
 
+.fixedChart {
+    flex-direction: column;
+    bottom: 1rem;
+}
 
 .fixedBottom {
     position: absolute;
     bottom: 1.2rem;
-    padding: 1rem;
-    z-index: 9;
     margin-top: 0;
 }
 
@@ -153,32 +154,29 @@ export default {
 
 .scrollToDo input[type="checkbox"] {
     appearance: none;
-    /* Remove default checkbox styling */
     width: 20px;
     height: 20px;
     border: 2px solid #d0b29f;
-    /* Milktea-like border */
     border-radius: 4px;
-    /* Rounded corners */
     background-color: white;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
-/* Change outline color when the checkbox is focused */
-.scrollToDo input[type="checkbox"]:focus {
-    outline: 2px solid #b28666;
-    /* Darker milktea-like outline on focus */
-    box-shadow: 0 0 5px rgba(178, 134, 102, 0.3);
-    /* Soft glow effect */
+.scrollToDo ul li button {
+    position: relative;
+    top: 0;
+    vertical-align: middle;
+    margin-left: 8px;
 }
 
-/* Add checkmark when checked */
+.scrollToDo input[type="checkbox"]:focus {
+    outline: 2px solid #b28666;
+    box-shadow: 0 0 5px rgba(178, 134, 102, 0.3);
+}
+
 .scrollToDo input[type="checkbox"]:checked {
     background-color: #d0b29f;
-    /* Milktea background */
     border-color: #d0b29f;
-    /* Border color same as background */
-    position: relative;
 }
 </style>
