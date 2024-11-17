@@ -3,31 +3,28 @@
         <div class="fixedChart">
             <v-progress-circular :model-value="value" :size="200" :width="30" color="#b28666" class="relative"
                 style="top: -40px">
-                <template v-slot:default>
-                    <span class="font-bold">{{ value }} % </span></template>
+                <template #default>
+                    <span class="font-bold">{{ value }} %</span>
+                </template>
             </v-progress-circular>
         </div>
-        <p class="text-4 font-bold text-[#b28666] relative underline" style="top: -80px">
-            To-Do-List
-        </p>
+        <p class="text-4 font-bold text-[#b28666] relative underline" style="top: -80px">To-Do-List</p>
         <div class="scrollToDo w-full relative" style="top: -70px">
             <ul>
                 <li v-for="(task, index) in toDo" :key="index" class="relative mx-2 mt-3">
                     <input type="checkbox" v-model="task.completed" @change="updateProgress"
                         class="text-4 font-bold text-[#b28666] mx-2 relative" />
-                    <span :class="{ completed: task.completed }">{{
-                        task.name
-                        }}</span>
+                    <span :class="{ completed: task.completed }">{{ task.name }}</span>
                     <button v-if="isEditing" @click="deleteTask(index)" class="text-red mx-2">
                         <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M20.5 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path
-                                d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5"
+                                d="M18.83 8.5l-.46 6.9c-.18 2.65-.27 3.98-1.14 4.79-.86.81-2.2.81-4.86.81h-1.77c-2.66 0-3.99 0-4.86-.81-.86-.81-.95-2.14-1.12-4.79L5.17 8.5"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path d="M9.5 11L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path d="M14.5 11L14 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path
-                                d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
+                                d="M6.5 6c.06 0 .09 0 .11-.001C7.43 5.978 8.16 5.455 8.44 4.68c.01-.024.02-.05.04-.103l.1-.292c.08-.25.12-.375.17-.48.22-.42.63-.71 1.1-.79.12-.02.25-.02.51-.02h3.29c.26 0 .39 0 .51.02.47.08.87.37 1.09.79.05.105.09.23.17.48l.1.292c.01.024.02.05.04.103.28.775 1.01 1.298 1.83 1.319.03 0 .06 0 .12 0"
                                 stroke="currentColor" stroke-width="1.5" />
                         </svg>
                     </button>
@@ -37,13 +34,9 @@
         <div class="fixedBottom w-1/4 flex items-center justify-center mt-4 scale-95">
             <button @click="addTask"
                 class="bg-[#b28666] text-4 text-white font-bold py-2 px-4 m-2 rounded-3xl hover:bg-[#8c6950]">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6">
-
-                    <line fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" x1="12" x2="12" y1="19" y2="5" />
-
-                    <line fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" x1="5" x2="19" y1="12" y2="12" />
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <line stroke="currentColor" stroke-width="2" x1="12" x2="12" y1="19" y2="5" />
+                    <line stroke="currentColor" stroke-width="2" x1="5" x2="19" y1="12" y2="12" />
                 </svg>
             </button>
             <input v-model="newTask" placeholder="Add a New Task" class="bg-white border px-2 py-2 mr-2 rounded" />
@@ -56,9 +49,7 @@
                             fill="currentColor" />
                     </svg>
                 </div>
-                <div v-else>
-                    Done
-                </div>
+                <div v-else>Done</div>
             </button>
         </div>
     </section>
@@ -66,42 +57,21 @@
 
 <script>
 export default {
-    data() {
-        return {
-            toDo: [],
-            newTask: "",
-            value: 0,
-            isEditing: false,
-        };
-    },
-
+    data: () => ({
+        toDo: [],
+        newTask: "",
+        value: 0,
+        isEditing: false,
+    }),
     methods: {
         updateProgress() {
-            if (this.toDo.length === 0) {
-                this.value = 0;
-            } else {
-                const completedTasks = this.addCount();
-                this.value = (
-                    (completedTasks / this.toDo.length) *
-                    100
-                ).toFixed(0);
-            }
+            this.value = this.toDo.length ? ((this.addCount() / this.toDo.length) * 100).toFixed(0) : 0;
         },
         addCount() {
-            let count = 0;
-            for (const task of this.toDo) {
-                if (task.completed) {
-                    count++;
-                }
-            }
-            return count;
+            return this.toDo.filter(task => task.completed).length;
         },
         addTask() {
-            if (this.newTask) {
-                this.toDo.push({ name: this.newTask, completed: false });
-                this.newTask = "";
-                this.updateProgress();
-            }
+            if (this.newTask) this.toDo.push({ name: this.newTask, completed: false }), this.newTask = "", this.updateProgress();
         },
         deleteTask(index) {
             this.toDo.splice(index, 1);
@@ -115,24 +85,23 @@ export default {
 </script>
 
 <style scoped>
-.fixedChart,
+.fixedChart {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    z-index: 9;
+    flex-direction: column;
+    bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
 .fixedBottom {
     display: flex;
     align-items: center;
-    position: relative;
     padding: 1rem;
     z-index: 9;
-}
-
-.fixedChart {
-    flex-direction: column;
-    bottom: 1rem;
-}
-
-.fixedBottom {
     position: absolute;
     bottom: 1.2rem;
-    margin-top: 0;
 }
 
 .scrollToDo {
@@ -140,7 +109,6 @@ export default {
     overflow-y: auto;
     width: 110%;
     padding: 1rem 1rem 0.5rem;
-    box-sizing: border-box;
 }
 
 .completed {
@@ -149,7 +117,7 @@ export default {
 }
 
 .v-progress-circular {
-    margin: 2rem;
+    margin: 2rem auto;
 }
 
 .scrollToDo input[type="checkbox"] {
@@ -158,14 +126,11 @@ export default {
     height: 20px;
     border: 2px solid #d0b29f;
     border-radius: 4px;
-    background-color: white;
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
     cursor: pointer;
 }
 
 .scrollToDo ul li button {
-    position: relative;
-    top: 0;
     vertical-align: middle;
     margin-left: 8px;
 }
