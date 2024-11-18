@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@vuepic/vue-datepicker": "^10.0.0",
+        "@vueup/vue-quill": "^1.2.0",
         "animejs": "^3.2.2",
         "apexcharts": "^4.0.0",
         "chart.js": "^4.4.6",

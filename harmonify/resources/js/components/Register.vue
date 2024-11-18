@@ -34,17 +34,18 @@
                     />
                 </div>
                 <div class="flex justify-between w-full m-2">
-                    <span
+                    <label
                         for="password_confirmation"
                         class="text-lg text-primary-milktea"
-                        >Confirm Password</span
+                        >Confirm Password</label
                     >
                     <input
-                        for="password_confirmation"
+                        id="password_confirmation"
                         type="password"
                         class="border ml-4 rounded"
                     />
                 </div>
+
                 <div class="flex justify-end items-center space-x-2">
                     <button
                         type="submit"
@@ -81,7 +82,6 @@ import {
     getAuth,
     createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -97,7 +97,6 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 window.createUser = function () {
