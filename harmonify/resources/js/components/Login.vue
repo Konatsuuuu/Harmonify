@@ -40,6 +40,14 @@
                         <GoogleLoginButton />
                     </span>
                 </div>
+                <div class="text-sm text-center">
+                    No account?
+                    <a
+                        href="/register"
+                        class="ml-1 underline text-primary-milktea cursor-pointer hover:text-[#de973a]"
+                        >Register</a
+                    >
+                </div>
             </div>
         </div>
     </div>
