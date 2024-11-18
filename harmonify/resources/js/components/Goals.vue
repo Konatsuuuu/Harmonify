@@ -12,19 +12,20 @@
         <div class="scrollToDo w-full relative" style="top: -70px">
             <ul>
                 <li v-for="(task, index) in toDo" :key="index" class="relative mx-2 mt-3">
-                    <input type="checkbox" v-model="task.completed" @change="updateProgress"
+                    <input type="checkbox" v-model="task.completed"
+                        @change="() => { updateProgress(); updateTaskStatus(index); }"
                         class="text-4 font-bold text-[#b28666] mx-2 relative" />
                     <span :class="{ completed: task.completed }">{{ task.name }}</span>
                     <button v-if="isEditing" @click="deleteTask(index)" class="text-red mx-2">
                         <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.5 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path
-                                d="M18.83 8.5l-.46 6.9c-.18 2.65-.27 3.98-1.14 4.79-.86.81-2.2.81-4.86.81h-1.77c-2.66 0-3.99 0-4.86-.81-.86-.81-.95-2.14-1.12-4.79L5.17 8.5"
+                                d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5"
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path d="M9.5 11L10 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path d="M14.5 11L14 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path
-                                d="M6.5 6c.06 0 .09 0 .11-.001C7.43 5.978 8.16 5.455 8.44 4.68c.01-.024.02-.05.04-.103l.1-.292c.08-.25.12-.375.17-.48.22-.42.63-.71 1.1-.79.12-.02.25-.02.51-.02h3.29c.26 0 .39 0 .51.02.47.08.87.37 1.09.79.05.105.09.23.17.48l.1.292c.01.024.02.05.04.103.28.775 1.01 1.298 1.83 1.319.03 0 .06 0 .12 0"
+                                d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
                                 stroke="currentColor" stroke-width="1.5" />
                         </svg>
                     </button>
@@ -56,31 +57,163 @@
 </template>
 
 <script>
+import {
+    db,
+    auth,
+    setDoc,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    deleteDoc,
+} from "@/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+
 export default {
     data: () => ({
         toDo: [],
         newTask: "",
         value: 0,
         isEditing: false,
+        userId: null,
     }),
     methods: {
         updateProgress() {
-            this.value = this.toDo.length ? ((this.addCount() / this.toDo.length) * 100).toFixed(0) : 0;
+            if (this.toDo.length === 0) {
+                this.value = 0;
+            }
+            else {
+                const completedTasks = this.addCount();
+                this.value = Math.round((completedTasks / this.toDo.length) * 100);
+            }
         },
         addCount() {
-            return this.toDo.filter(task => task.completed).length;
+            let count = 0;
+            for (const task of this.toDo) {
+                if (task.completed) {
+                    count++;
+                }
+            }
+            return count;
         },
         addTask() {
-            if (this.newTask) this.toDo.push({ name: this.newTask, completed: false }), this.newTask = "", this.updateProgress();
+            console.log("addTask called");
+            if (this.newTask) {
+                console.log("Adding task:", this.newTask);
+                this.toDo.push({ name: this.newTask, completed: false });
+                this.newTask = "";
+                this.updateProgress();
+                this.saveToFirebase();
+            }
         },
-        deleteTask(index) {
-            this.toDo.splice(index, 1);
-            this.updateProgress();
+        async deleteTask(index) {
+            if (!this.userId) {
+                console.error("User ID not available, cannot delete task.");
+                return;
+            }
+            try {
+                // Get the document reference for the task to delete
+                const taskDocRef = doc(
+                    db,
+                    "users",
+                    this.userId,
+                    "todos",
+                    `task-${index}`
+                );
+
+                // Delete the document from Firestore
+                await deleteDoc(taskDocRef);
+                console.log(`Task ${index} deleted successfully`);
+
+                // Remove the task from the local array
+                this.toDo.splice(index, 1);
+                this.updateProgress();
+
+                // Re-save the remaining tasks to update indices in Firestore
+                await this.saveToFirebase();
+            } catch (error) {
+                console.error("Error deleting task:", error);
+            }
         },
         toggleEdit() {
             this.isEditing = !this.isEditing;
         },
+        async fetchToDoData() {
+            if (!this.userId) {
+                console.error("User ID not available");
+                return;
+            }
+            try {
+                console.log("Fetching tasks for user:", this.userId);
+                // Reference the todos subcollection for the user
+                const todosRef = collection(db, "users", this.userId, "todos");
+                const todosSnapshot = await getDocs(todosRef);
+                console.log("Fetched documents:", todosSnapshot.docs);
+                // Map the fetched documents to the toDo array
+                this.toDo = todosSnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    console.log("Document data:", data); // Log each task
+                    return {
+                        name: data.name || "Unnamed Task", // Default name if missing
+                        completed: data.completed || false, // Default completed state
+                    };
+                });
+                console.log("To-Do List updated:", this.toDo);
+            } catch (error) {
+                console.error("Error fetching To-Do List:", error);
+            }
+        },
+        async saveToFirebase() {
+            if (!this.userId) {
+                console.error("User ID not available, cannot save data.");
+                return;
+            }
+            try {
+                // Clear all existing tasks in Firestore
+                const todosRef = collection(db, "users", this.userId, "todos");
+                const todosSnapshot = await getDocs(todosRef);
+                for (const docSnap of todosSnapshot.docs) {
+                    await deleteDoc(docSnap.ref);
+                }
+
+                // Save tasks with updated indices
+                for (const [i, task] of this.toDo.entries()) {
+                    const taskDocRef = doc(
+                        db,
+                        "users",
+                        this.userId,
+                        "todos",
+                        `task-${i}`
+                    );
+                    await setDoc(taskDocRef, {
+                        userId: this.userId,
+                        name: task.name,
+                        completed: task.completed,
+                    });
+                }
+
+                console.log("All tasks saved successfully after deletion!");
+            } catch (error) {
+                console.error("Error saving tasks after deletion:", error);
+            }
+        },
+        async updateTaskStatus(index) {
+            this.saveToFirebase(index); // Save only the updated task
+        }
     },
+    mounted() {
+        console.log("Goals.vue mounted!");
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.userId = user.uid;
+                console.log("User ID set:", this.userId);
+                this.fetchToDoData();
+            } else {
+                this.userId = null;
+                console.error("User is not logged in");
+            }
+        });
+    }
 };
 </script>
 
@@ -120,28 +253,8 @@ export default {
     margin: 2rem auto;
 }
 
-.scrollToDo input[type="checkbox"] {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #d0b29f;
-    border-radius: 4px;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
 .scrollToDo ul li button {
     vertical-align: middle;
     margin-left: 8px;
-}
-
-.scrollToDo input[type="checkbox"]:focus {
-    outline: 2px solid #b28666;
-    box-shadow: 0 0 5px rgba(178, 134, 102, 0.3);
-}
-
-.scrollToDo input[type="checkbox"]:checked {
-    background-color: #d0b29f;
-    border-color: #d0b29f;
 }
 </style>
