@@ -158,6 +158,7 @@ export default {
                         completed: data.completed || false, // Default completed state
                     };
                 });
+                this.updateProgress();
                 console.log("To-Do List updated:", this.toDo);
             } catch (error) {
                 console.error("Error fetching To-Do List:", error);
