@@ -247,6 +247,9 @@ export default {
             }
         },
         async deleteReply(reply, index) {
+            if (!reply || !reply.id) {
+                return;
+            }
             try {
                 const postId =
                     document.getElementById("postdetail-app").dataset.id;
