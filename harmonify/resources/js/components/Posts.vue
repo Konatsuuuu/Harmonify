@@ -43,7 +43,7 @@
                                     All
                                 </li>
                                 <li
-                                    v-for="emotion in dropdownList"
+                                    v-for="emotion in emotions"
                                     :key="emotion.name"
                                     @click="selectEmotion(emotion.name)"
                                     class="px-4 py-2 cursor-pointer hover:bg-gray-100 text-primary-milktea"
@@ -79,6 +79,7 @@
                     v-for="post in filteredPosts"
                     :key="post.id"
                     class="bg-white shadow-lg rounded-xl mb-4 p-4 break-inside-avoid"
+                    @click="directToPostDetailPage(post.id)"
                 >
                     <div class="flex items-center mb-4">
                         <img
@@ -90,11 +91,15 @@
                             {{ post.title }}
                         </p>
                     </div>
-                    <p class="text-gray-700 text-md mb-4 line-clamp">
+                    <p class="text-md mb-4 line-clamp">
                         {{ post.content }}
                     </p>
                     <div class="rounded-lg overflow-hidden">
-                        <img :src="post.image" class="w-full object-cover" />
+                        <img
+                            v-if="post.images && post.images.length > 0"
+                            :src="post.images[0]"
+                            class="w-full object-cover"
+                        />
                     </div>
                 </div>
             </div>
@@ -110,16 +115,17 @@
                             v-for="emotion in emotions"
                             :key="emotion.name"
                             class="w-20 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer"
-                            @click.stop="animatePopupEmotion(emotion)"
+                            @click="animatePopupEmotion(emotion)"
                             :class="{
                                 'font-bold':
-                                    popupSelectedEmotion?.name === emotion.name,
+                                    popupSelectedEmotion &&
+                                    popupSelectedEmotion.name === emotion.name,
                             }"
                         >
                             <img
                                 :src="emotion.icon"
                                 :alt="emotion.name"
-                                :ref="'emotion-' + emotion.name"
+                                :ref="emotion.name"
                                 class="popup-emotion w-full h-full rounded-full"
                             />
                             <div>{{ emotion.name }}</div>
@@ -129,11 +135,22 @@
                         type="text"
                         v-model="newPost.title"
                         class="w-full p-2 mb-4 border rounded"
+                        placeholder="Title"
                     />
-                    <quill-editor
+                    <textarea
                         v-model="newPost.content"
-                        class="h-40 mb-4 border"
-                    ></quill-editor>
+                        class="w-full mb-4 h-40"
+                        placeholder="Content"
+                    ></textarea>
+                    <div class="w-full items-center justify-center">
+                        <v-file-input
+                            label="Upload Images"
+                            accept="image/*"
+                            show-size
+                            multiple
+                            @change="uploadImage"
+                        ></v-file-input>
+                    </div>
                     <div class="flex justify-end">
                         <button
                             @click="togglePopup"
@@ -155,114 +172,46 @@
 </template>
 
 <script>
-import { QuillEditor } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import anime from "animejs/lib/anime.es.js";
+import {
+    db,
+    auth,
+    setDoc,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    storage,
+    addDoc,
+    query,
+    orderBy,
+    limit,
+} from "@/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 import BackButton from "./BackButton.vue";
 
 export default {
     components: {
         BackButton,
-        QuillEditor,
     },
     data() {
         return {
             newPost: {
                 title: "",
                 content: "",
-                //TODO: Add img & emotion
+                image: "",
             },
             isPopupVisible: false,
             isDropdownVisible: false,
             selectedEmotion: null,
             popupSelectedEmotion: null,
-            posts: [
-                {
-                    id: 1,
-                    emotion: {
-                        name: "Happy",
-                        icon: "/svg/happy_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "/images/test1.jpeg",
-                },
-                {
-                    id: 2,
-                    emotion: {
-                        name: "Calm",
-                        icon: "/svg/calm_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "/images/test2.jpeg",
-                },
-                {
-                    id: 3,
-                    emotion: {
-                        name: "Sad",
-                        icon: "/svg/sad_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "/images/test3.jpeg",
-                },
-                {
-                    id: 4,
-                    emotion: {
-                        name: "Happy",
-                        icon: "/svg/happy_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "/images/test4.jpeg",
-                },
-                {
-                    id: 7,
-                    emotion: {
-                        name: "Angry",
-                        icon: "/svg/angry_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "",
-                },
-                {
-                    id: 5,
-                    emotion: {
-                        name: "Calm",
-                        icon: "/svg/calm_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "/images/test5.jpeg",
-                },
-                {
-                    id: 6,
-                    emotion: {
-                        name: "Sad",
-                        icon: "/svg/sad_bubble.svg",
-                    },
-                    title: "Lorem ipsum odor amet",
-                    content:
-                        "Lorem ipsum odor amet, consectetuer adipiscing elit. Aliquam viverra turpis sem justo nibh senectus amet. Taciti senectus pretium mauris rhoncus tristique duis tempus lacus? Eu aliquet maecenas at feugiat penatibus leo. Tincidunt sodales libero odio ante lacinia nascetur molestie donec. Eget a curabitur metus taciti risus iaculis dui scelerisque. Lacinia sociosqu elementum congue suspendisse est litora at; phasellus fringilla. Interdum blandit sit tempor imperdiet vivamus phasellus.",
-                    image: "/images/test6.jpeg",
-                },
-                // Add more posts here
-            ],
-            dropdownList: [
-                { name: "Happy", icon: "/svg/happy_bubble.svg" },
-                { name: "Calm", icon: "/svg/calm_bubble.svg" },
-                { name: "Sad", icon: "/svg/sad_bubble.svg" },
-                { name: "Angry", icon: "/svg/angry_bubble.svg" },
-            ],
+            isUploadingImages: false,
+            posts: [],
             emotions: [
                 { name: "Happy", icon: "/svg/happy_bubble.svg" },
                 { name: "Calm", icon: "/svg/calm_bubble.svg" },
@@ -277,13 +226,129 @@ export default {
                 return this.posts;
             }
             return this.posts.filter(
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
                 (post) => post.emotion.name === this.selectedEmotion.name
             );
         },
     },
     methods: {
-        submitPost() {
-            // TODO: complete the function
+        async fetchPosts() {
+            try {
+                const postSnapshot = await getDocs(
+                    query(collection(db, "posts"), orderBy("date", "desc"))
+                );
+                const fetchedPosts = [];
+                postSnapshot.forEach((doc) => {
+                    const postData = doc.data();
+                    const Post = {
+                        id: doc.id,
+                        userId: postData.userId,
+                        username: postData.username,
+                        title: postData.title,
+                        content: postData.content,
+                        images: Array.isArray(postData.images)
+                            ? postData.images
+                            : [],
+                        emotion: {
+                            name: postData.emotion,
+                            icon: this.getEmotionIcon(postData.emotion),
+                        },
+                        date: postData.date,
+                    };
+
+                    fetchedPosts.push(Post);
+                });
+                this.posts = fetchedPosts;
+                console.log("Posts fetched successfully:", fetchedPosts);
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+                alert("Failed to fetch posts");
+            }
+        },
+        getEmotionIcon(emotionName) {
+            const emotion = this.emotions.find((e) => e.name === emotionName);
+            return emotion.icon;
+        },
+        directToPostDetailPage(id) {
+            window.location.href = `/posts/${id}`;
+        },
+        // https://zenn.dev/tentel/books/a96e4a64d3a672911f25/viewer/58bd63
+        async uploadImage(event) {
+            const files = event.target.files;
+            this.newPost.image = [];
+            this.isUploadingImages = true;
+
+            const uploadPromises = Array.from(files).map((file) => {
+                const storageRef = ref(storage, "images/" + file.name);
+                return uploadBytes(storageRef, file)
+                    .then((snapshot) => getDownloadURL(snapshot.ref))
+                    .then((downloadURL) => {
+                        this.newPost.image.push(downloadURL);
+                    })
+                    .catch((error) => {
+                        console.error("Error uploading image:", error);
+                    });
+            });
+
+            try {
+                await Promise.all(uploadPromises);
+                console.log(
+                    "Images uploaded successfully:",
+                    this.newPost.image
+                );
+            } catch (error) {
+                console.error("Error during image upload:", error);
+            } finally {
+                this.isUploadingImages = false;
+            }
+        },
+        // https://www.koderhq.com/tutorial/vue/firestore-database/#how-it-works
+        async submitPost() {
+            if (
+                !this.newPost.title ||
+                !this.newPost.content ||
+                !this.popupSelectedEmotion
+            ) {
+                alert("Please fill all the fields!");
+                return;
+            }
+
+            if (this.isUploadingImages) {
+                alert("Please wait for images to finish uploading!");
+                return;
+            }
+
+            const user = auth.currentUser;
+            const colRef = collection(db, "posts");
+
+            const postData = {
+                userId: user.uid,
+                username: await this.getUserName(user.uid),
+                title: this.newPost.title,
+                content: this.newPost.content,
+                images: this.newPost.image || [],
+                emotion: this.popupSelectedEmotion.name,
+                date: new Date(),
+            };
+
+            try {
+                const docRef = await addDoc(colRef, postData);
+                console.log("Document was created with ID:", docRef.id);
+                this.togglePopup();
+                this.newPost = { title: "", content: "", image: [] };
+                this.fetchPosts();
+            } catch (error) {
+                console.error("Error adding document:", error);
+            }
+        },
+        async getUserName(userId) {
+            try {
+                const userSnapshot = await getDoc(doc(db, "users", userId));
+                return userSnapshot.data().username;
+            } catch (error) {
+                console.error("Error fetching username:", error);
+                return;
+            }
         },
         togglePopup() {
             this.isPopupVisible = !this.isPopupVisible;
@@ -293,13 +358,13 @@ export default {
             this.isDropdownVisible = !this.isDropdownVisible;
         },
         selectEmotion(emotionName) {
-            this.selectedEmotion =
-                this.emotions.find((emotion) => emotion.name === emotionName) ||
-                null;
+            this.selectedEmotion = this.emotions.find(
+                (emotion) => emotion.name === emotionName
+            );
         },
         animatePopupEmotion(emotion) {
             this.popupSelectedEmotion = emotion;
-            const element = this.$refs["emotion-" + emotion.name];
+            const element = this.$refs[emotion.name];
             if (element) {
                 anime({
                     targets: element,
@@ -309,6 +374,20 @@ export default {
                 });
             }
         },
+    },
+    mounted() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                this.userId = user.uid;
+                console.log("User ID:", this.userId);
+                this.fetchPosts();
+            } else {
+                // User is signed out
+                console.warn("User is signed out");
+            }
+        });
     },
 };
 </script>

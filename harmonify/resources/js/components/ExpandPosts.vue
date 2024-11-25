@@ -1,5 +1,4 @@
 <template>
-    <!-- logout icon with popup confirmation -->
     <div>
         <svg
             @click="directToPosts"

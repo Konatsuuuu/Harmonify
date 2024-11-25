@@ -12,7 +12,17 @@ import {
     getDoc,
     deleteDoc,
     doc,
+    addDoc,
+    query,
+    orderBy,
+    limit,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDOcUz9FFkzTGWT-7GOT5rGZK_SVmmtxfg",
@@ -27,5 +37,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 
-export { db, auth, collection, getDocs, getDoc, setDoc, deleteDoc, doc };
+export {
+    db,
+    auth,
+    collection,
+    getDocs,
+    getDoc,
+    setDoc,
+    deleteDoc,
+    doc,
+    storage,
+    signOut,
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    addDoc,
+    query,
+    orderBy,
+    limit,
+};

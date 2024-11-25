@@ -9,7 +9,7 @@
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:v="https://svgstorm.com"
                         viewBox="0 0 1218 292"
-                        style="width: 200px; height: auto"
+                        class="w-[200px] height-auto"
                     >
                         <g
                             fill="currentColor"
@@ -627,32 +627,6 @@ C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z"
                 </div>
 
                 <div class="flex space-x-4 text-[#b28666]">
-                    <svg
-                        class="w-8 h-8 cursor-pointer"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M12.5 2V5.25154C12.5 5.66576 12.8358 6.00154 13.25 6.00154C13.6642 6.00154 14 5.66576 14 5.25154V2H15V6.25112C15 6.66534 15.3358 7.00112 15.75 7.00112C16.1642 7.00112 16.5 6.66534 16.5 6.25112V2H18.2502C18.6645 2 19.0002 2.33579 19.0002 2.75V11H5.00024V2.75C5.00024 2.33579 5.33603 2 5.75024 2H12.5Z"
-                            fill="currentColor"
-                        />
-                        <path
-                            d="M5.00024 12.5V14.2521C5.00024 15.4947 6.0076 16.5021 7.25024 16.5021H9.99991V20C9.99991 21.1046 10.8953 22 11.9999 22C13.1045 22 13.9999 21.1046 13.9999 20V16.5021H16.7502C17.9929 16.5021 19.0002 15.4947 19.0002 14.2521V12.5H5.00024Z"
-                            fill="currentColor"
-                        />
-                    </svg>
-                    <svg
-                        class="w-8 h-8 cursor-pointer"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M20.1 9.2214C18.29 9.2214 17.55 7.9414 18.45 6.3714C18.97 5.4614 18.66 4.3014 17.75 3.7814L16.02 2.7914C15.23 2.3214 14.21 2.6014 13.74 3.3914L13.63 3.5814C12.73 5.1514 11.25 5.1514 10.34 3.5814L10.23 3.3914C9.78 2.6014 8.76 2.3214 7.97 2.7914L6.24 3.7814C5.33 4.3014 5.02 5.4714 5.54 6.3814C6.45 7.9414 5.71 9.2214 3.9 9.2214C2.86 9.2214 2 10.0714 2 11.1214V12.8814C2 13.9214 2.85 14.7814 3.9 14.7814C5.71 14.7814 6.45 16.0614 5.54 17.6314C5.02 18.5414 5.33 19.7014 6.24 20.2214L7.97 21.2114C8.76 21.6814 9.78 21.4014 10.25 20.6114L10.36 20.4214C11.26 18.8514 12.74 18.8514 13.65 20.4214L13.76 20.6114C14.23 21.4014 15.25 21.6814 16.04 21.2114L17.77 20.2214C18.68 19.7014 18.99 18.5314 18.47 17.6314C17.56 16.0614 18.3 14.7814 20.11 14.7814C21.15 14.7814 22.01 13.9314 22.01 12.8814V11.1214C22 10.0814 21.15 9.2214 20.1 9.2214ZM12 15.2514C10.21 15.2514 8.75 13.7914 8.75 12.0014C8.75 10.2114 10.21 8.7514 12 8.7514C13.79 8.7514 15.25 10.2114 15.25 12.0014C15.25 13.7914 13.79 15.2514 12 15.2514Z"
-                            fill="currentColor"
-                        />
-                    </svg>
                     <Logout />
                 </div>
             </div>
@@ -677,6 +651,9 @@ C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z"
                         <p class="text-2xl font-bold m-3 ml-6 text-[#b28666]">
                             Posts
                         </p>
+                        <div class="w-full overflow-hidden">
+                            <DashboardPost class="max-w-full" />
+                        </div>
                         <div
                             class="absolute flex-1 flex items-end justify-end ml-2 right-0 bottom-4"
                         >
@@ -709,12 +686,15 @@ C 995.71 201.36 1000.23 201.37 1004.00 201.00 Z"
 </template>
 
 <script>
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
 import ExpandCalendar from "./ExpandCalendar.vue";
 import Logout from "./Logout.vue";
 import ExpandSleepGraph from "./ExpandSleepGraph.vue";
 import ExpandPosts from "./ExpandPosts.vue";
 import Goals from "./Goals.vue";
 import DashboardCalendar from "./DashboardCalendar.vue";
+import DashboardPost from "./DashboardPost.vue";
 
 export default {
     components: {
@@ -724,6 +704,14 @@ export default {
         ExpandPosts,
         Goals,
         DashboardCalendar,
+        DashboardPost,
+    },
+    mounted() {
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "/login";
+            }
+        });
     },
 };
 </script>

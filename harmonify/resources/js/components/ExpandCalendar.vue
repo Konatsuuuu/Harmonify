@@ -1,5 +1,4 @@
 <template>
-    <!-- logout icon with popup confirmation -->
     <div>
         <svg
             @click="directToCalendarPage"
@@ -12,26 +11,6 @@
                 d="M3,20V12a1,1,0,0,1,2,0v5.585L17.586,5H12a1,1,0,0,1,0-2h8a1,1,0,0,1,1,1v8a1,1,0,0,1-2,0V6.414L6.414,19H12a1,1,0,0,1,0,2H4A1,1,0,0,1,3,20Z"
             />
         </svg>
-        <div
-            v-if="showPopUp"
-            class="absolute right-5 mt-2 p-4 bg-white rounded-lg shadow-sm text-center"
-        >
-            <div class="text-xl text-[#50858B]">Logout?</div>
-            <div class="mt-1 flex justify-center">
-                <button
-                    @click="logout"
-                    class="m-1 px-4 py-2 bg-[#50858B] text-white rounded-lg"
-                >
-                    Yes
-                </button>
-                <button
-                    @click="togglePopUp"
-                    class="m-1 px-4 py-2 bg-[#A1D2CE] text-[#50858B] rounded-lg"
-                >
-                    Cancel
-                </button>
-            </div>
-        </div>
     </div>
 </template>
 

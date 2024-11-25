@@ -1,11 +1,11 @@
 <template>
     <div
-        class="flex flex-col items-center"
+        class="flex flex-col items-center origin-top"
         :style="{
             transform: `scale(${scale})`,
-            transformOrigin: 'top center',
         }"
     >
+        <!-- Title -->
         <div class="flex items-center justify-between w-full p-4">
             <button @click="prevMonth" class="text-[#b28666] w-10 h-10">
                 <svg
@@ -42,6 +42,7 @@
             </button>
         </div>
 
+        <!-- Display the days of the week -->
         <div class="grid grid-cols-7 gap-6 w-full text-[#b28666] text-lg">
             <div
                 v-for="day in weekdays"
@@ -52,14 +53,13 @@
             </div>
         </div>
 
+        <!-- Actual calendar area -->
         <div class="grid grid-cols-7 gap-6 w-full">
             <div
                 v-for="(day, index) in daysInMonth"
                 :key="index"
-                :class="[
-                    'w-20 h-20 border-4 border-dashed border-[#b28666] text-[#b28666] bg-white/50 flex items-center justify-center rounded-full',
-                    { 'border-none bg-transparent': day && day.emotion },
-                ]"
+                class="w-20 h-20 border-4 border-dashed border-[#b28666] text-[#b28666] bg-white/50 flex items-center justify-center rounded-full"
+                :class="{ 'border-none bg-transparent': day && day.emotion }"
                 @click="day && selectDay(day)"
             >
                 <div v-if="!day" class="text-lg font-bold"></div>
@@ -74,6 +74,7 @@
             </div>
         </div>
 
+        <!-- Pop up for diary -->
         <div
             v-if="showPopup"
             class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
@@ -94,9 +95,8 @@
                     >
                         <img
                             :src="emotion.icon"
-                            :alt="emotion.name"
-                            :ref="'emotion-' + emotion.name"
-                            class="popup-emotion w-full h-full rounded-full"
+                            :ref="emotion.name"
+                            class="w-full h-full rounded-full"
                         />
                         <div>{{ emotion.name }}</div>
                     </div>
@@ -106,7 +106,7 @@
                     class="mt-10 w-full p-2 border rounded"
                 ></textarea>
                 <button
-                    @click="saveSelectedEmotion"
+                    @click="saveDiary"
                     class="mt-4 mr-4 px-4 py-2 bg-[#b28666] text-white rounded"
                 >
                     Save
@@ -152,7 +152,7 @@ export default {
             diary: "",
             userId: null,
             weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            scale: 1,
+            scale: 1, // change the scale value if needed
         };
     },
     computed: {
@@ -165,18 +165,10 @@ export default {
     },
     methods: {
         async fetchEmotionData() {
-            if (!this.userId) {
-                console.error("User ID not available");
-                return;
-            }
             try {
-                const userDocRef = collection(
-                    db,
-                    "users",
-                    this.userId,
-                    "emotions"
+                const emotionSnapshot = await getDocs(
+                    collection(db, "users", this.userId, "emotions")
                 );
-                const emotionSnapshot = await getDocs(userDocRef);
                 const emotionData = emotionSnapshot.docs.map((doc) =>
                     doc.data()
                 );
@@ -205,51 +197,34 @@ export default {
             }
         },
         async saveEmotionData(day, emotion, diary) {
-            if (!this.userId) {
-                console.error("User ID not available, cannot save data.");
-                return;
-            }
             try {
                 const dateId = `${this.currentYear}-${this.currentMonth + 1}-${
                     day.date
                 }`;
-                const userDocRef = doc(
-                    db,
-                    "users",
-                    this.userId,
-                    "emotions",
-                    dateId
+                await setDoc(
+                    doc(db, "users", this.userId, "emotions", dateId),
+                    {
+                        date: dateId,
+                        emotion: emotion.name,
+                        diary: diary,
+                    }
                 );
-                await setDoc(userDocRef, {
-                    date: dateId,
-                    emotion: emotion.name,
-                    diary: diary,
-                });
                 console.log("Data saved successfully!");
             } catch (error) {
                 console.error("Error saving data:", error);
             }
         },
         async fetchDiary(day) {
-            if (!this.userId) {
-                console.error("User ID not available");
-                return;
-            }
             try {
                 const dateId = `${this.currentYear}-${this.currentMonth + 1}-${
                     day.date
                 }`;
-                const userDocRef = doc(
-                    db,
-                    "users",
-                    this.userId,
-                    "emotions",
-                    dateId
+                const diarySnapShot = await getDoc(
+                    doc(db, "users", this.userId, "emotions", dateId)
                 );
-                const docSnap = await getDoc(userDocRef);
 
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
+                if (diarySnapShot.exists()) {
+                    const data = diarySnapShot.data();
                     this.diary = data.diary || "";
                 } else {
                     this.diary = "";
@@ -260,7 +235,7 @@ export default {
         },
         animatePopupEmotion(emotion) {
             this.selectedEmotion = emotion;
-            const element = this.$refs["emotion-" + emotion.name];
+            const element = this.$refs[emotion.name];
             if (element) {
                 anime({
                     targets: element,
@@ -270,14 +245,12 @@ export default {
                 });
             }
         },
-        saveSelectedEmotion() {
+        saveDiary() {
             if (this.selectedDayIndex !== null) {
                 const day = this.daysInMonth[this.selectedDayIndex];
-                if (day) {
-                    day.emotion = this.selectedEmotion;
-                    day.diary = this.diary;
-                    this.saveEmotionData(day, this.selectedEmotion, this.diary);
-                }
+                day.emotion = this.selectedEmotion;
+                day.diary = this.diary;
+                this.saveEmotionData(day, this.selectedEmotion, this.diary);
             }
             this.closePopup();
         },
@@ -297,30 +270,36 @@ export default {
             this.diary = "";
             this.showPopup = false;
         },
-        calculateDaysInMonth() {
+        calculateDaysInMonthArr() {
+            // https://segmentfault.com/a/1190000042417306
             const days = new Date(
                 this.currentYear,
                 this.currentMonth + 1,
                 0
             ).getDate();
-            const firstDayOfWeek = new Date(
+
+            // get the day of the first day of the month
+            const firstDayOfMonth = new Date(
                 this.currentYear,
                 this.currentMonth,
                 1
             ).getDay();
 
-            this.daysInMonth = Array.from(
-                { length: firstDayOfWeek },
-                () => null
-            );
+            //fill the day array with null to display empty bubble
+            this.daysInMonth = [];
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                this.daysInMonth.push(null);
+            }
 
-            this.daysInMonth.push(
-                ...Array.from({ length: days }, (_, i) => ({
-                    date: i + 1,
+            // then with the actual date
+            for (let i = 1; i <= days; i++) {
+                this.daysInMonth.push({
+                    date: i,
                     emotion: null,
-                }))
-            );
+                });
+            }
 
+            // scale the calendar if the row count exceeds 5
             const rowCount = Math.ceil(this.daysInMonth.length / 7);
             this.scale = rowCount > 5 ? 0.9 : 1;
         },
@@ -331,7 +310,7 @@ export default {
             } else {
                 this.currentMonth--;
             }
-            this.calculateDaysInMonth();
+            this.calculateDaysInMonthArr();
             this.fetchEmotionData();
         },
         nextMonth() {
@@ -341,7 +320,7 @@ export default {
             } else {
                 this.currentMonth++;
             }
-            this.calculateDaysInMonth();
+            this.calculateDaysInMonthArr();
             this.fetchEmotionData();
         },
         async selectDay(day) {
@@ -367,14 +346,17 @@ export default {
         },
     },
     mounted() {
-        this.calculateDaysInMonth();
+        this.calculateDaysInMonthArr();
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
                 this.userId = user.uid;
                 console.log("User ID:", this.userId);
                 this.fetchEmotionData();
             } else {
-                console.warn("No user is signed in.");
+                // User is signed out
+                console.warn("User is signed out");
             }
         });
     },

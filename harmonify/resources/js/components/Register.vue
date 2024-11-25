@@ -56,20 +56,15 @@
                     </button>
                 </div>
             </div>
-            <div class="grid p-4 justify-center items-center">
-                <div class="flex m-2">
-                    <span class="text-xl p-2 text-primary-milktea">Or...</span>
-                    <span>
-                        <GoogleLoginButton />
-                    </span>
-                </div>
-            </div>
         </div>
     </div>
 </template>
 
 <script type="module">
 import GoogleLoginButton from "./GoogleLoginButton.vue";
+import { db, setDoc, collection, getDocs, getDoc, doc } from "@/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+
 export default {
     name: "Register",
     components: {
@@ -99,9 +94,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
-window.createUser = function () {
+window.createUser = async function () {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const username = document.getElementById("username").value;
     const confirmPassword = document.getElementById(
         "password_confirmation"
     ).value;
@@ -109,18 +105,22 @@ window.createUser = function () {
         alert("Passwords do not match!");
         return;
     }
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed up
-            const user = userCredential.user;
-            // ...
-            alert("User registered successfully!");
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-            alert(`Error: ${errorMessage}`);
+    try {
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+        const userId = userCredential.user.uid;
+        await setDoc(doc(db, "users", userId), {
+            username: username,
         });
+        window.location.href = "/";
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        console.log(`Error: ${errorMessage}`);
+    }
 };
 </script>

@@ -34,12 +34,6 @@
                 </div>
             </div>
             <div class="grid p-4 justify-center items-center">
-                <div class="flex m-2">
-                    <span class="text-xl p-2 text-primary-milktea">Or...</span>
-                    <span>
-                        <GoogleLoginButton />
-                    </span>
-                </div>
                 <div class="text-sm text-center">
                     No account?
                     <a
@@ -98,7 +92,6 @@ window.loginUser = function () {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            alert("Login successful!");
             window.location.href = "/";
             // ...
         })
