@@ -1,23 +1,25 @@
 <template>
     <section class="page flex flex-col items-center mt-4">
-        <div class="fixedChart">
-            <v-progress-circular :model-value="value" :size="200" :width="30" color="#b28666" class="relative"
-                style="top: -40px">
+        <div class="flex flex-col items-center p-4 z-9 mb-8 bottom-4">
+            <v-progress-circular :model-value="value" :size="200" :width="30" color="#b28666"
+                class="relative my-8 mx-auto" style="top: -40px">
                 <template #default>
                     <span class="font-bold">{{ value }} %</span>
                 </template>
             </v-progress-circular>
         </div>
-        <p class="text-4 font-bold text-[#b28666] relative underline" style="top: -80px">To-Do-List</p>
-        <div class="scrollToDo w-full relative" style="top: -70px">
+        <p class="text-4 font-bold text-[#b28666] relative underline" style="top: -80px">
+            To-Do-List
+        </p>
+        <div class="max-h-[270px] overflow-y-auto w-full p-4 pt-2 relative" style="top: -70px">
             <ul>
                 <li v-for="(task, index) in toDo" :key="index" class="relative mx-2 mt-3">
                     <input type="checkbox" v-model="task.completed"
                         @change="() => { updateProgress(); updateTaskStatus(index); }"
                         class="text-4 font-bold text-[#b28666] mx-2 relative" />
-                    <span :class="{ completed: task.completed }">{{ task.name }}</span>
-                    <button v-if="isEditing" @click="deleteTask(index)" class="text-red mx-2">
-                        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+                    <span :class="{ 'line-through text-gray-500': task.completed }">{{ task.name }}</span>
+                    <button v-if="isEditing" @click="deleteTask(index)" class="text-red align-middle mx-2">
+                        <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <path
                                 d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5"
@@ -32,7 +34,7 @@
                 </li>
             </ul>
         </div>
-        <div class="fixedBottom w-1/4 flex items-center justify-center mt-4 scale-95">
+        <div class="w-1/4 flex items-center justify-center mt-4 p-4 z-9 scale-95 absolute bottom-5">
             <button @click="addTask"
                 class="bg-[#b28666] text-4 text-white font-bold py-2 px-4 m-2 rounded-3xl hover:bg-[#8c6950]">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
@@ -97,9 +99,7 @@ export default {
             return count;
         },
         addTask() {
-            console.log("addTask called");
             if (this.newTask) {
-                console.log("Adding task:", this.newTask);
                 this.toDo.push({ name: this.newTask, completed: false });
                 this.newTask = "";
                 this.updateProgress();
@@ -112,7 +112,6 @@ export default {
                 return;
             }
             try {
-                // Get the document reference for the task to delete
                 const taskDocRef = doc(
                     db,
                     "users",
@@ -120,18 +119,12 @@ export default {
                     "todos",
                     `task-${index}`
                 );
-
-                // Delete the document from Firestore
                 await deleteDoc(taskDocRef);
-                console.log(`Task ${index} deleted successfully`);
-
-                // Remove the task from the local array
                 this.toDo.splice(index, 1);
                 this.updateProgress();
-
-                // Re-save the remaining tasks to update indices in Firestore
                 await this.saveToFirebase();
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error deleting task:", error);
             }
         },
@@ -144,23 +137,18 @@ export default {
                 return;
             }
             try {
-                console.log("Fetching tasks for user:", this.userId);
-                // Reference the todos subcollection for the user
                 const todosRef = collection(db, "users", this.userId, "todos");
                 const todosSnapshot = await getDocs(todosRef);
-                console.log("Fetched documents:", todosSnapshot.docs);
-                // Map the fetched documents to the toDo array
                 this.toDo = todosSnapshot.docs.map((doc) => {
                     const data = doc.data();
-                    console.log("Document data:", data); // Log each task
                     return {
-                        name: data.name || "Unnamed Task", // Default name if missing
-                        completed: data.completed || false, // Default completed state
+                        name: data.name || "Unnamed Task",
+                        completed: data.completed || false,
                     };
                 });
                 this.updateProgress();
-                console.log("To-Do List updated:", this.toDo);
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error fetching To-Do List:", error);
             }
         },
@@ -170,14 +158,11 @@ export default {
                 return;
             }
             try {
-                // Clear all existing tasks in Firestore
                 const todosRef = collection(db, "users", this.userId, "todos");
                 const todosSnapshot = await getDocs(todosRef);
                 for (const docSnap of todosSnapshot.docs) {
                     await deleteDoc(docSnap.ref);
                 }
-
-                // Save tasks with updated indices
                 for (const [i, task] of this.toDo.entries()) {
                     const taskDocRef = doc(
                         db,
@@ -192,22 +177,19 @@ export default {
                         completed: task.completed,
                     });
                 }
-
-                console.log("All tasks saved successfully after deletion!");
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error saving tasks after deletion:", error);
             }
         },
         async updateTaskStatus(index) {
-            this.saveToFirebase(index); // Save only the updated task
+            this.saveToFirebase(index);
         }
     },
     mounted() {
-        console.log("Goals.vue mounted!");
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.userId = user.uid;
-                console.log("User ID set:", this.userId);
                 this.fetchToDoData();
             } else {
                 this.userId = null;
@@ -217,45 +199,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.fixedChart {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    z-index: 9;
-    flex-direction: column;
-    bottom: 1rem;
-    margin-bottom: 2rem;
-}
-
-.fixedBottom {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    z-index: 9;
-    position: absolute;
-    bottom: 1.2rem;
-}
-
-.scrollToDo {
-    max-height: 270px;
-    overflow-y: auto;
-    width: 110%;
-    padding: 1rem 1rem 0.5rem;
-}
-
-.completed {
-    text-decoration: line-through;
-    color: gray;
-}
-
-.v-progress-circular {
-    margin: 2rem auto;
-}
-
-.scrollToDo ul li button {
-    vertical-align: middle;
-    margin-left: 8px;
-}
-</style>

@@ -1,78 +1,155 @@
 <template>
     <div class="flex flex-1 mb-4">
-        <div class="flex-1 flex flex-col items-center justify-center text-[#b28666] bg-white/30 mr-2 ml-4 rounded-xl">
-            Monday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/happy_bubble.svg" alt="Happy Bubble" class="bubble" />
-                </button>
+        <div class="grid grid-rows-3 grid-cols-3 gap-2 w-full h-full px-2 mb-2">
+            <!-- sun to tues -->
+            <div v-for="(day, index) in daysInWeek.slice(0, 3)" :key="'row-1' + index"
+                class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl">
+                <div class="font-bold text-lg text-[#b28666]">{{ day && day.day }}</div>
+                <div class="w-28 h-28 flex items-center justify-center">
+                    <img v-if="day && day.emotion" :src="day.emotion.icon" class="bubble" />
+                </div>
             </div>
-        </div>
-        <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 rounded-xl">
-            Tuesday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/smiling_bubble.svg" alt="Smiling Bubble" class="bubble" />
-                </button>
+
+            <!-- wed to fri -->
+            <div v-for="(day, index) in daysInWeek.slice(3, 6)" :key="'row-2' + index"
+                class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl">
+                <div class="font-bold text-lg text-[#b28666]">{{ day && day.day }}</div>
+                <div class="w-28 h-28 flex items-center justify-center">
+                    <img v-if="day && day.emotion" :src="day.emotion.icon" class="bubble" />
+                </div>
             </div>
-        </div>
-        <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-4 ml-2 rounded-xl">
-            Wednesday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/sad_bubble.svg" alt="Sad Bubble" class="bubble" />
-                </button>
+
+            <div></div>
+            <!-- sat -->
+            <div class="flex-1 flex flex-col items-center justify-center bg-white/50 mx-1 rounded-xl">
+                <div class="font-bold text-lg text-[#b28666]">{{ daysInWeek[6] && daysInWeek[6].day }}</div>
+                <div class="w-28 h-28 flex items-center justify-center">
+                    <img v-if="daysInWeek[6] && daysInWeek[6].emotion" :src="daysInWeek[6].emotion.icon"
+                        class="bubble" />
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="flex flex-1 mb-4">
-        <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-2 ml-4 rounded-xl">
-            Thursday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/angry_bubble.svg" alt="Angry Bubble" class="bubble" />
-                </button>
+            <div class="flex items-end justify-end mb-4">
+                <ExpandCalendar />
             </div>
-        </div>
-        <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 rounded-xl">
-            Friday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/sad_bubble.svg" alt="Sad Bubble" class="bubble" />
-                </button>
-            </div>
-        </div>
-        <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mr-4 ml-2 rounded-xl">
-            Saturday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/happy_bubble.svg" alt="Happy Bubble" class="bubble" />
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="flex flex-1 mb-4">
-        <div class="flex-1 flex flex-col items-start justify-center mr-2 ml-4"></div>
-        <div class="flex-1 flex flex-col items-center justify-center bg-white/30 mx-2 rounded-xl">
-            Sunday
-            <div class="w-28 h-28 item-center justify-center mb-6">
-                <button type="button" class="flex h-full w-full justify-center">
-                    <img src="/public/svg/happy_bubble.svg" alt="Happy Bubble" class="bubble" />
-                </button>
-            </div>
-        </div>
-        <div class="flex-1 flex items-end justify-end mr-4 ml-2 mb-4">
-            <ExpandCalendar />
         </div>
     </div>
 </template>
 
 <script>
 import ExpandCalendar from "./ExpandCalendar.vue";
+import {
+    db,
+    auth,
+    setDoc,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+} from "@/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import anime from "animejs/lib/anime.es.js";
 
 export default {
     components: {
         ExpandCalendar,
     },
+    data() {
+        return {
+            daysInWeek: [],
+            emotions: [
+                { name: "Happy", icon: "/svg/happy_bubble.svg" },
+                { name: "Calm", icon: "/svg/calm_bubble.svg" },
+                { name: "Sad", icon: "/svg/sad_bubble.svg" },
+                { name: "Angry", icon: "/svg/angry_bubble.svg" },
+            ],
+            userId: null,
+            weekdays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        };
+    },
+    methods: {
+        getStartOfWeek(date) {
+            const dayOfWeek = date.getDay();
+            const startOfWeek = new Date(date);
+            startOfWeek.setDate(date.getDate() - dayOfWeek);
+            return startOfWeek;
+        },
+        async fetchWeeklyEmotionData() {
+            if (!this.userId) {
+                console.error("User ID not available");
+                return;
+            }
+            try {
+                const today = new Date();
+                const startOfWeek = this.getStartOfWeek(today);
+                const userDocRef = collection(
+                    db,
+                    "users",
+                    this.userId,
+                    "emotions"
+                );
+                const emotionSnapshot = await getDocs(userDocRef);
+
+                const weeklyData = {};
+                emotionSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.date;
+                    weeklyData[date] = data.emotion;
+                });
+
+                this.daysInWeek = [];
+
+                for (let index = 0; index < 7; index++) {
+                    const dayDate = new Date(startOfWeek);
+                    dayDate.setDate(startOfWeek.getDate() + index);
+
+                    //https://stackoverflow.com/questions/25159330/how-to-convert-an-iso-date-to-the-date-format-yyyy-mm-dd
+                    const formattedDate = dayDate.toISOString().substring(0, 10);
+
+                    this.daysInWeek.push({
+                        day: this.weekdays[dayDate.getDay() % 7],
+                        date: formattedDate,
+                        emotion: this.emotions.find((emotion) => emotion.name === weeklyData[formattedDate])
+                    });
+                }
+                console.log("Days in Week:", this.daysInWeek);
+            }
+            catch (error) {
+                console.error("Error fetching weekly emotions:", error);
+            }
+
+            // https://stackoverflow.com/questions/55897236/triggering-a-css-animation-upon-a-vue-component-being-mounted
+            this.$nextTick(() => {
+                // https://vuejs.org/api/component-instance.html
+                anime({
+                    targets: ".bubble",
+                    translateY: [10, -20],
+                    direction: "alternate",
+                    easing: "easeInOutSine",
+                    duration: 3000,
+                    loop: true,
+                });
+            });
+        },
+    },
+    mounted() {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                this.userId = user.uid;
+                this.fetchWeeklyEmotionData();
+            }
+            else {
+                console.warn("No user is signed in.");
+            }
+        });
+    },
 };
 </script>
+
+<style scoped>
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+</style>
