@@ -3,9 +3,9 @@
         <div class="flex flex-col items-center p-4 z-9 mb-8 bottom-4">
             <v-progress-circular :model-value="value" :size="200" :width="30" color="#b28666"
                 class="relative my-8 mx-auto" style="top: -40px">
-                <template #default>
+                <div>
                     <span class="font-bold">{{ value }} %</span>
-                </template>
+                </div>
             </v-progress-circular>
         </div>
         <p class="text-4 font-bold text-[#b28666] relative underline" style="top: -80px">

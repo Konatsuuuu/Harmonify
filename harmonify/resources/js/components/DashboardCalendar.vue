@@ -2,55 +2,30 @@
     <div class="flex flex-1 mb-4">
         <div class="grid grid-rows-3 grid-cols-3 gap-2 w-full h-full px-2 mb-2">
             <!-- sun to tues -->
-            <div
-                v-for="(day, index) in daysInWeek.slice(0, 3)"
-                :key="'row-1' + index"
-                class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl"
-            >
-                <div class="font-bold text-lg text-[#b28666]">
-                    {{ day && day.day }}
-                </div>
+            <div v-for="(day, index) in daysInWeek.slice(0, 3)" :key="'row-1' + index"
+                class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl">
+                <div class="font-bold text-lg text-[#b28666]">{{ day && day.day }}</div>
                 <div class="w-28 h-28 flex items-center justify-center">
-                    <img
-                        v-if="day && day.emotion"
-                        :src="day.emotion.icon"
-                        class="bubble"
-                    />
+                    <img v-if="day && day.emotion" :src="day.emotion.icon" class="bubble" />
                 </div>
             </div>
 
             <!-- wed to fri -->
-            <div
-                v-for="(day, index) in daysInWeek.slice(3, 6)"
-                :key="'row-2' + index"
-                class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl"
-            >
-                <div class="font-bold text-lg text-[#b28666]">
-                    {{ day && day.day }}
-                </div>
+            <div v-for="(day, index) in daysInWeek.slice(3, 6)" :key="'row-2' + index"
+                class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl">
+                <div class="font-bold text-lg text-[#b28666]">{{ day && day.day }}</div>
                 <div class="w-28 h-28 flex items-center justify-center">
-                    <img
-                        v-if="day && day.emotion"
-                        :src="day.emotion.icon"
-                        class="bubble"
-                    />
+                    <img v-if="day && day.emotion" :src="day.emotion.icon" class="bubble" />
                 </div>
             </div>
 
             <div></div>
             <!-- sat -->
-            <div
-                class="flex-1 flex flex-col items-center justify-center bg-white/50 mx-1 rounded-xl"
-            >
-                <div class="font-bold text-lg text-[#b28666]">
-                    {{ daysInWeek[6] && daysInWeek[6].day }}
-                </div>
+            <div class="flex-1 flex flex-col items-center justify-center bg-white/50 mx-1 rounded-xl">
+                <div class="font-bold text-lg text-[#b28666]">{{ daysInWeek[6] && daysInWeek[6].day }}</div>
                 <div class="w-28 h-28 flex items-center justify-center">
-                    <img
-                        v-if="daysInWeek[6] && daysInWeek[6].emotion"
-                        :src="daysInWeek[6].emotion.icon"
-                        class="bubble"
-                    />
+                    <img v-if="daysInWeek[6] && daysInWeek[6].emotion" :src="daysInWeek[6].emotion.icon"
+                        class="bubble" />
                 </div>
             </div>
             <div class="flex items-end justify-end mb-4">
@@ -88,15 +63,7 @@ export default {
                 { name: "Angry", icon: "/svg/angry_bubble.svg" },
             ],
             userId: null,
-            weekdays: [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-            ],
+            weekdays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         };
     },
     methods: {
@@ -136,21 +103,17 @@ export default {
                     dayDate.setDate(startOfWeek.getDate() + index);
 
                     //https://stackoverflow.com/questions/25159330/how-to-convert-an-iso-date-to-the-date-format-yyyy-mm-dd
-                    const formattedDate = dayDate
-                        .toISOString()
-                        .substring(0, 10);
+                    const formattedDate = dayDate.toISOString().substring(0, 10);
 
                     this.daysInWeek.push({
                         day: this.weekdays[dayDate.getDay() % 7],
                         date: formattedDate,
-                        emotion: this.emotions.find(
-                            (emotion) =>
-                                emotion.name === weeklyData[formattedDate]
-                        ),
+                        emotion: this.emotions.find((emotion) => emotion.name === weeklyData[formattedDate])
                     });
                 }
                 console.log("Days in Week:", this.daysInWeek);
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error fetching weekly emotions:", error);
             }
 
@@ -173,19 +136,11 @@ export default {
             if (user) {
                 this.userId = user.uid;
                 this.fetchWeeklyEmotionData();
-            } else {
+            }
+            else {
                 console.warn("No user is signed in.");
             }
         });
     },
 };
 </script>
-
-<style scoped>
-.calendar-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-}
-</style>
