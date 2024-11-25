@@ -99,7 +99,9 @@ export default {
             return count;
         },
         addTask() {
+            console.log("addTask called");
             if (this.newTask) {
+                console.log("Adding task:", this.newTask);
                 this.toDo.push({ name: this.newTask, completed: false });
                 this.newTask = "";
                 this.updateProgress();
@@ -120,11 +122,11 @@ export default {
                     `task-${index}`
                 );
                 await deleteDoc(taskDocRef);
+                console.log(`Task ${index} deleted successfully`);
                 this.toDo.splice(index, 1);
                 this.updateProgress();
                 await this.saveToFirebase();
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("Error deleting task:", error);
             }
         },
@@ -137,16 +139,20 @@ export default {
                 return;
             }
             try {
+                console.log("Fetching tasks for user:", this.userId);
                 const todosRef = collection(db, "users", this.userId, "todos");
                 const todosSnapshot = await getDocs(todosRef);
+                console.log("Fetched documents:", todosSnapshot.docs);
                 this.toDo = todosSnapshot.docs.map((doc) => {
                     const data = doc.data();
+                    console.log("Document data:", data);
                     return {
                         name: data.name || "Unnamed Task",
                         completed: data.completed || false,
                     };
                 });
                 this.updateProgress();
+                console.log("To-Do List updated:", this.toDo);
             }
             catch (error) {
                 console.error("Error fetching To-Do List:", error);
@@ -177,8 +183,9 @@ export default {
                         completed: task.completed,
                     });
                 }
-            }
-            catch (error) {
+
+                console.log("All tasks saved successfully after deletion!");
+            } catch (error) {
                 console.error("Error saving tasks after deletion:", error);
             }
         },
@@ -187,9 +194,11 @@ export default {
         }
     },
     mounted() {
+        console.log("Goals.vue mounted!");
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.userId = user.uid;
+                console.log("User ID set:", this.userId);
                 this.fetchToDoData();
             } else {
                 this.userId = null;
