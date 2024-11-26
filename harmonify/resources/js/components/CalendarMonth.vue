@@ -233,6 +233,7 @@ export default {
                 console.error("Error fetching diary:", error);
             }
         },
+        // the scale animation if clicked
         animatePopupEmotion(emotion) {
             this.selectedEmotion = emotion;
             const element = this.$refs[emotion.name];
