@@ -2,6 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebas
 import {
     getAuth,
     signOut,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
 import {
@@ -58,4 +60,6 @@ export {
     query,
     orderBy,
     limit,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
 };
