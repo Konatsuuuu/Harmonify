@@ -97,11 +97,11 @@ export default {
 
                     const formattedDate = dayDate.toISOString().substring(0, 10);
 
-                    this.daysInWeek.push({
+                    this.daysInWeek[index] = {
                         day: this.weekdays[dayDate.getDay() % 7],
                         date: formattedDate,
                         emotion: this.emotions.find((emotion) => emotion.name === weeklyData[formattedDate])
-                    });
+                    };
                 }
                 console.log("Days in Week:", this.daysInWeek);
             }
