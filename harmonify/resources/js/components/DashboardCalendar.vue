@@ -99,7 +99,6 @@ export default {
                     const dayDate = new Date(startOfWeek);
                     dayDate.setDate(startOfWeek.getDate() + index);
 
-                    //https://stackoverflow.com/questions/25159330/how-to-convert-an-iso-date-to-the-date-format-yyyy-mm-dd
                     const formattedDate = dayDate.toISOString().substring(0, 10);
 
                     this.daysInWeek.push({
@@ -113,10 +112,7 @@ export default {
             catch (error) {
                 console.error("Error fetching weekly emotions:", error);
             }
-
-            // https://stackoverflow.com/questions/55897236/triggering-a-css-animation-upon-a-vue-component-being-mounted
             this.$nextTick(() => {
-                // https://vuejs.org/api/component-instance.html
                 anime({
                     targets: ".bubble",
                     translateY: [10, -20],
