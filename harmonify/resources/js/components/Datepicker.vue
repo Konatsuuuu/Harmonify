@@ -75,7 +75,7 @@
         <!-- Action Buttons -->
         <div class="flex justify-center items-center p-3">
             <button
-                @click="selectToday"
+                @click="selectToday($event)"
                 class="w-20 h-10 text-white bg-[#B28666] hover:bg-[#8c6950] focus:outline-none font-medium text-sm rounded-full text-center me-2 mb-2 dark:bg-[#B28666] dark:hover:bg-[#8c6950]"
             >
                 Today
@@ -144,12 +144,13 @@ export default {
             }
         },
 
-        selectToday() {
+        selectToday(event) {
+            // https://www.w3schools.com/jsref/event_preventdefault.asp
+            event.preventDefault();
             const today = new Date();
             const formattedToday = `${today.getFullYear()}-${this.formatMonth(
                 today.getMonth() + 1
             )}-${this.formatDay(today.getDate())}`;
-
             this.$emit("date-selected", formattedToday);
         },
 
