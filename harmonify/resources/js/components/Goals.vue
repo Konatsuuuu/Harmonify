@@ -72,13 +72,15 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 
 export default {
-    data: () => ({
-        toDo: [],
-        newTask: "",
-        value: 0,
-        isEditing: false,
-        userId: null,
-    }),
+    data() {
+        return {
+            toDo: [],
+            newTask: "",
+            value: 0,
+            isEditing: false,
+            userId: null,
+        };
+    },
     methods: {
         updateProgress() {
             if (this.toDo.length === 0) {
@@ -109,10 +111,6 @@ export default {
             }
         },
         async deleteTask(index) {
-            if (!this.userId) {
-                console.error("User ID not available, cannot delete task.");
-                return;
-            }
             try {
                 const taskDocRef = doc(
                     db,
@@ -135,10 +133,6 @@ export default {
             this.isEditing = !this.isEditing;
         },
         async fetchToDoData() {
-            if (!this.userId) {
-                console.error("User ID not available");
-                return;
-            }
             try {
                 console.log("Fetching tasks for user:", this.userId);
                 const todosRef = collection(db, "users", this.userId, "todos");
@@ -160,10 +154,6 @@ export default {
             }
         },
         async saveDatabase() {
-            if (!this.userId) {
-                console.error("User ID not available, cannot save data.");
-                return;
-            }
             try {
                 const todosRef = collection(db, "users", this.userId, "todos");
                 const todosSnapshot = await getDocs(todosRef);
@@ -196,13 +186,14 @@ export default {
         console.log("Goals.vue mounted!");
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
                 this.userId = user.uid;
-                console.log("User ID set:", this.userId);
+                console.log("User ID:", this.userId);
                 this.fetchToDoData();
-            }
-            else {
-                this.userId = null;
-                console.error("User is not logged in");
+            } else {
+                // User is signed out
+                console.warn("User is signed out");
             }
         });
     }

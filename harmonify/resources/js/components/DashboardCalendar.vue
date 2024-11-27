@@ -2,7 +2,7 @@
     <div class="flex flex-1 mb-4">
         <div class="grid grid-rows-3 grid-cols-3 gap-2 w-full h-full px-2 mb-2">
             <!-- sun to tues -->
-            <div v-for="(day, index) in daysInWeek.slice(0, 3)" :key="'row-1' + index"
+            <div v-for="(day, index) in daysInWeek.slice(0, 3)" :key="index"
                 class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl">
                 <div class="font-bold text-lg text-[#b28666]">{{ day && day.day }}</div>
                 <div class="w-28 h-28 flex items-center justify-center">
@@ -11,7 +11,7 @@
             </div>
 
             <!-- wed to fri -->
-            <div v-for="(day, index) in daysInWeek.slice(3, 6)" :key="'row-2' + index"
+            <div v-for="(day, index) in daysInWeek.slice(3, 6)" :key="index"
                 class="flex-1 flex flex-col items-center justify-center bg-white/50 mr-1 ml-2 mb-2 rounded-xl">
                 <div class="font-bold text-lg text-[#b28666]">{{ day && day.day }}</div>
                 <div class="w-28 h-28 flex items-center justify-center">
@@ -71,10 +71,6 @@ export default {
             return startOfWeek;
         },
         async fetchWeeklyEmotionData() {
-            if (!this.userId) {
-                console.error("User ID not available");
-                return;
-            }
             try {
                 const today = new Date();
                 const startOfWeek = this.getStartOfWeek(today);
@@ -127,11 +123,14 @@ export default {
     mounted() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
                 this.userId = user.uid;
+                console.log("User ID:", this.userId);
                 this.fetchWeeklyEmotionData();
-            }
-            else {
-                console.warn("No user is signed in.");
+            } else {
+                // User is signed out
+                console.warn("User is signed out");
             }
         });
     },
