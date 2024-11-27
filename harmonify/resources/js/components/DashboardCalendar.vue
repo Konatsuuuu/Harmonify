@@ -40,11 +40,8 @@ import ExpandCalendar from "./ExpandCalendar.vue";
 import {
     db,
     auth,
-    setDoc,
     collection,
     getDocs,
-    getDoc,
-    doc,
 } from "@/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import anime from "animejs/lib/anime.es.js";

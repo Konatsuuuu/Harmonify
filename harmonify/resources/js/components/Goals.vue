@@ -105,7 +105,7 @@ export default {
                 this.toDo.push({ name: this.newTask, completed: false });
                 this.newTask = "";
                 this.updateProgress();
-                this.saveToFirebase();
+                this.saveDatabase();
             }
         },
         async deleteTask(index) {
@@ -125,7 +125,7 @@ export default {
                 console.log(`Task ${index} deleted successfully`);
                 this.toDo.splice(index, 1);
                 this.updateProgress();
-                await this.saveToFirebase();
+                await this.saveDatabase();
             } catch (error) {
                 console.error("Error deleting task:", error);
             }
@@ -158,7 +158,7 @@ export default {
                 console.error("Error fetching To-Do List:", error);
             }
         },
-        async saveToFirebase() {
+        async saveDatabase() {
             if (!this.userId) {
                 console.error("User ID not available, cannot save data.");
                 return;
@@ -190,7 +190,7 @@ export default {
             }
         },
         async updateTaskStatus(index) {
-            this.saveToFirebase(index);
+            this.saveDatabase(index);
         }
     },
     mounted() {
