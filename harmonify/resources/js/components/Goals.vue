@@ -1,6 +1,6 @@
 <template>
     <section class="page flex flex-col items-center mt-4">
-        <div class="flex flex-col items-center p-4 z-9 mb-8 bottom-4">
+        <div class="flex flex-col items-center p-2 z-9 mb-8 bottom-4">
             <v-progress-circular :model-value="value" :size="200" :width="30" color="#b28666"
                 class="relative my-8 mx-auto" style="top: -40px">
                 <div>
@@ -15,7 +15,7 @@
             <ul>
                 <li v-for="(task, index) in toDo" :key="index" class="relative mx-2 mt-3">
                     <input type="checkbox" v-model="task.completed"
-                        @change="() => { updateProgress(); updateTaskStatus(index); }"
+                        @change="() => { updateProgress(); saveDatabase(index); }"
                         class="text-4 font-bold text-[#b28666] mx-2 relative" />
                     <span :class="{ 'line-through text-gray-500': task.completed }">{{ task.name }}</span>
                     <button v-if="isEditing" @click="deleteTask(index)" class="text-red align-middle mx-2">
@@ -126,7 +126,8 @@ export default {
                 this.toDo.splice(index, 1);
                 this.updateProgress();
                 await this.saveDatabase();
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error deleting task:", error);
             }
         },
@@ -185,12 +186,10 @@ export default {
                 }
 
                 console.log("All tasks saved successfully after deletion!");
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error saving tasks after deletion:", error);
             }
-        },
-        async updateTaskStatus(index) {
-            this.saveDatabase(index);
         }
     },
     mounted() {
@@ -200,7 +199,8 @@ export default {
                 this.userId = user.uid;
                 console.log("User ID set:", this.userId);
                 this.fetchToDoData();
-            } else {
+            }
+            else {
                 this.userId = null;
                 console.error("User is not logged in");
             }
