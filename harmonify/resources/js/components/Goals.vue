@@ -147,8 +147,8 @@ export default {
                     const data = doc.data();
                     console.log("Document data:", data);
                     return {
-                        name: data.name || "Unnamed Task",
-                        completed: data.completed || false,
+                        name: data.name,
+                        completed: data.completed,
                     };
                 });
                 this.updateProgress();
